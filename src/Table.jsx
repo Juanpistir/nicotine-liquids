@@ -87,22 +87,19 @@ function Table({
             <td>&nbsp;</td>
           </tr>
 
-              <tr>
-                <td>flavors</td>
-                <td colSpan="3">
-                  <ul>
-                    {/* Muestra los nombres y porcentajes de los sabores */}
-                    {sabores.map((sabor, index) => (
-                      <li key={index}>
-                        {sabor.nombre}: {sabor.porcentaje}%
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
+          {sabores.map((sabor, index) => (
+            <tr key={index}>
+              <td>&nbsp;{sabor.nombre}</td>
+              <td>&nbsp;{((sabor.porcentaje * cantidad) / 100).toFixed(2)}</td>
+              <td style={{ fontWeight: "bold" }}>
+                &nbsp;{((sabor.porcentaje * cantidad) / 100).toFixed(2)}
+              </td>
+              <td>&nbsp;{sabor.porcentaje}</td>
+            </tr>
+          ))}
 
           <tr>
-            <td>&nbsp;total</td>
+            <td>&nbsp;Total</td>
             <td>&nbsp;{cantidad}</td>
             <td>&nbsp;{SumatoriaGrams.toFixed(1)}</td>
             <td>&nbsp;{100}</td>
