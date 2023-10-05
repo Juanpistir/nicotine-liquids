@@ -1,0 +1,421 @@
+<div id="recipecontent">
+  <div class="nopr">
+    <div class="alert alert-danger">
+      You are not logged in! To save, you must log in.
+    </div>
+  </div>
+  <form
+    method="POST"
+    action="https://e-liquid-recipes.com/create"
+    accept-charset="UTF-8"
+    id="recform"
+    class="form-horizontal"
+  >
+    <input
+      name="_token"
+      type="hidden"
+      value="nS4kkUro633pCRc7iIYBRpFS0AIc2aDBA2IpK5P0"
+    />
+    <div id="frmrec">
+      <fieldset>
+        <legend>
+          <span id="acttext"></span>
+          <input
+            id="title"
+            required="required"
+            placeholder="Recipe name"
+            name="title"
+            type="text"
+            value=""
+          />
+        </legend>
+
+        <div class="control-group">
+          <label for="res" class="control-label">Amount to make</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                name="res"
+                type="number"
+                value="10"
+                id="res"
+              />
+              <div class="add-on">ml</div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="control-group">
+          <label for="tstre" class="control-label">Desired strength</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                step="0.1"
+                name="tstre"
+                type="number"
+                value="6"
+                id="tstre"
+              />
+              <div class="add-on">mg</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="wvpga" class="control-label">Water/Vodka/PGA</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                name="wvpga"
+                type="number"
+                value="0"
+                id="wvpga"
+              />
+              <div class="add-on">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group" id="pglab">
+          <label for="pgg" class="control-label">Desired PG</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                name="pgg"
+                type="number"
+                value="30"
+                id="pgg"
+              />
+              <div class="add-on">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="vgg" class="control-label vglab">Desired VG</label>
+          <div class="controls">
+            <div class="input-append vglab">
+              <input
+                class="rinp"
+                required="required"
+                name="vgg"
+                type="number"
+                value="70"
+                id="vgg"
+              />
+              <div class="add-on">%</div>
+            </div>
+            <div>
+              <label class="checkbox">
+                <input type="checkbox" id="maxvg" name="maxvg" value="1" />
+                Max VG
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="nstr" class="control-label">Nicotine strength</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                step="any"
+                name="nstr"
+                type="number"
+                value="100"
+                id="nstr"
+              />
+              <div class="add-on">mg</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="nipg" class="control-label">PG-content of nicotine</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                name="nipg"
+                type="number"
+                value="100"
+                id="nipg"
+              />
+              <div class="add-on">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="nivg" class="control-label">VG-content of nicotine</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                required="required"
+                name="nivg"
+                type="number"
+                value="0"
+                id="nivg"
+              />
+              <div class="add-on">%</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="steep" class="control-label">Suggested steep time</label>
+          <div class="controls">
+            <div class="input-append">
+              <input
+                class="rinp"
+                name="steep"
+                type="number"
+                value=""
+                id="steep"
+              />
+              <div class="add-on">days</div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="checkbox">
+            <input
+              type="checkbox"
+              id="premixbase"
+              name="premixbase"
+              value="1"
+            />
+            Use vape-ready nicotine base
+          </label>
+        </div>
+
+        <div id="flavors"></div>
+      </fieldset>
+      <div style="clear: both">
+        <br /><button type="button" class="btn btn-info">
+          <i class="icon icon-tint icon-white"></i> Add flavor
+        </button>
+      </div>
+      <div id="ermsg" style="display: none"></div>
+      <div class="control-group drprml" style="display: none">
+        <label
+          for="xdpml"
+          class="control-label"
+          title="Estimate! Default 25 drops per ml - In reality this figure is probably higher!"
+          >Drops per ml</label
+        >
+        <div class="controls">
+          <input
+            class="rinp"
+            required="required"
+            name="xdpml"
+            type="number"
+            value="35"
+            id="xdpml"
+          />
+        </div>
+      </div>
+      Notes:<br />
+      <div id="smnote">
+        Write everything relevant, like where to get the flavors.
+      </div>
+      <textarea
+        name="notes"
+        id="notes"
+        style="width: 450px; height: 100px"
+      ></textarea>
+      <br /><br />
+      <label class="checkbox" id="defbox"
+        ><input name="setdef" type="checkbox" value="1" />
+        <abbr title="All values but the flavors will be set as defaults"
+          >Set these base values as default</abbr
+        ></label
+      >
+      <label class="checkbox" id="priv"
+        ><input
+          type="checkbox"
+          id="ispriv"
+          name="ispriv"
+          value="1"
+          checked="checked"
+        />
+        This is a private recipe</label
+      >
+      <br />
+      <button type="submit" id="savebtn" class="btn btn-success">
+        <i class="icon icon-white icon-ok"></i> Save
+      </button>
+      <br />
+    </div>
+  </form>
+  <div class="btn-group pull-right nopr" style="margin-top: 3px">
+    <a
+      class="btn btn-primary dropdown-toggle nopr"
+      id="actbut"
+      data-toggle="dropdown"
+      href="#"
+      title=""
+      ><i class="icon-white icon-wrench"></i
+    ></a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="#"><i class="icon-print"></i> Print</a>
+      </li>
+      <li class="cpytxt divider"></li>
+      <li class="cpytxt">
+        <a href="#" type="button" id="copyreddit"
+          ><i class="icon-pencil"></i> Copy as markdown (reddit)</a
+        >
+      </li>
+      <li class="cpytxt">
+        <a href="#" type="button" id="copybb"
+          ><i class="icon-pencil"></i> Copy as BBCODE</a
+        >
+      </li>
+      <li class="cpytxt">
+        <a href="#" type="button" id="copyhtmltext"
+          ><i class="icon-pencil"></i> Copy as HTML (text)</a
+        >
+      </li>
+      <li class="cpytxt">
+        <a href="#" type="button" id="copysimple"
+          ><i class="icon-pencil"></i> Copy simple text</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <h2 id="rname">&nbsp;</h2>
+  <div id="recipe">
+    <div id="rechead">
+      <div class="rlab">Ingredient</div>
+      <div class="runit">ml</div>
+      <div class="rdrops" style="display: none">Drops</div>
+      <div class="rgrams">Grams</div>
+      <div class="rpercent">%</div>
+      <br />
+    </div>
+    <div class="recline highlight" id="rnic">
+      <div class="rlab">
+        <span class="nopr indic indic-danger"></span>Nicotine juice
+        <span id="rnstr">100 mg</span> (<span id="nirat">100% PG</span>)
+      </div>
+      <div class="runit" id="rnicml">0.60</div>
+      <div class="rdrops" id="rnicdr" style="display: none">21</div>
+      <div class="rgrams" id="rnicg">0.62</div>
+      <div class="rpercent" id="rnicper">6.00</div>
+      <br />
+    </div>
+    <div class="recline" id="rpgd">
+      <div class="rlab">
+        <span class="nopr indic indic-warning"></span
+        ><abbr title="Propylene Glycol">PG</abbr> dilutant
+      </div>
+      <div class="runit" id="rpgml">2.40</div>
+      <div class="rdrops" id="rpgdr" style="display: none">84</div>
+      <div class="rgrams" id="rpgg">2.49</div>
+      <div class="rpercent" id="rpgper">24.00</div>
+      <br />
+    </div>
+    <div class="recline highlight" id="rvgd">
+      <div class="rlab">
+        <span class="nopr indic indic-success"></span
+        ><abbr title="Vegetable Glycerine">VG</abbr> dilutant
+      </div>
+      <div class="runit" id="rvgml">7.00</div>
+      <div class="rdrops" id="rvgdr" style="display: none">245</div>
+      <div class="rgrams" id="rvgg">8.83</div>
+      <div class="rpercent" id="rvgper">70.00</div>
+      <br />
+    </div>
+    <div class="recline" id="rwvpga" style="display: none">
+      <div class="rlab">
+        <span class="nopr indic indic-white"></span>Water/Vodka/<abbr
+          title="Pure Grain Alcohol"
+          >PGA</abbr
+        >
+      </div>
+      <div class="runit" id="rwvpgaml">0</div>
+      <div class="rdrops" id="rwvpgadr" style="display: none">0</div>
+      <div class="rgrams" id="rwvpgag">0</div>
+      <div class="rpercent" id="rwvpgaper">0</div>
+      <br />
+    </div>
+    <div class="recline" id="btots" style="font-style: italic; color: #ccc">
+      <div class="rlab">Total base</div>
+      <div class="runit" id="totbaseml">10</div>
+      <div class="rdrops" id="totbasedr" style="display: none">350</div>
+      <div class="rgrams" id="totbaseg">11.94</div>
+      <div class="rpercent" id="totbaseper">100</div>
+      <br />
+    </div>
+    <div id="recflavor"></div>
+    <div class="recline rtotals highlight" id="rtot">
+      <div class="rlab">Totals</div>
+      <div class="runit" id="rtu">10</div>
+      <div class="rdrops" id="rtd" style="display: none">350</div>
+      <div class="rgrams" id="rtg">11.94</div>
+      <div class="rpercent" id="rtp">100</div>
+      <br />
+    </div>
+  </div>
+  <br />
+  <div class="progress nopr">
+    <div
+      class="bar bar-danger"
+      id="bn"
+      title="Nicotine content"
+      style="width: 6%"
+    ></div>
+    <div
+      class="bar bar-warning"
+      id="bp"
+      title="PG content"
+      style="width: 24%"
+    ></div>
+    <div
+      class="bar bar-success"
+      id="bv"
+      title="VG content"
+      style="width: 70%"
+    ></div>
+    <div
+      class="bar bar-info"
+      id="bf"
+      title="Flavor content"
+      style="width: 0%"
+    ></div>
+  </div>
+  <div>
+    Strength: <span id="fstr">6</span>
+    <abbr title="Milligrams per milliliter">mg</abbr>
+  </div>
+  <div>PG/VG-ratio: <span id="pvr">30/70</span></div>
+  <div>
+    Flavor total: <span id="flml">0 ml / 0g</span> (<span id="flper">0%</span>)
+  </div>
+  <div class="drprml" style="display: none">
+    Drops per ml: <span id="dpml">35</span>
+  </div>
+  <br />
+  <div id="rnotes"><div class="translink nopr"></div></div>
+  <br />
+  <div class="nopr"></div>
+  <p class="nopr">
+    Short URL:
+    <input
+      id="short"
+      readonly="readonly"
+      name="short"
+      type="text"
+      value="http://tjek.nu/r/0"
+      style="width: 99px"
+    />
+  </p>
+</div>
