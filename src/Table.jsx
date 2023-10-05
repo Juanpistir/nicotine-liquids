@@ -34,12 +34,6 @@ function Table({
 
   const SumatoriaGrams = GramsPg + GramsVg + NicGrams;
 
-  //Estilo
-  const estiloItalico = {
-    fontStyle: "italic",
-    fontSize: "40px",
-  };
-
   //Funciones
 
   // Agrega un estado para almacenar los sabores
@@ -52,7 +46,8 @@ function Table({
   return (
     <>
       <h2>
-        Esencia: <span style={estiloItalico}>{nombreEsencia}</span>
+        Esencia: <span style={{fontStyle: "italic",
+    fontSize: "40px",}}>{nombreEsencia}</span>
       </h2>
       <table>
         <tbody>
