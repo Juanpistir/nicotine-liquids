@@ -5,13 +5,25 @@ function Sabores({ pgValue, vgValue }) {
   const [sabores, setSabores] = useState([]);
   const [totalPG, setTotalPG] = useState(0);
   const [totalVG, setTotalVG] = useState(0);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     calcularPorcentajeTotal();
   }, [sabores]);
 
   const añadirSabor = (nuevoSabor) => {
-    setSabores([...sabores, nuevoSabor]);
+    if (puedeAgregarSabor(nuevoSabor)) {
+      setSabores([...sabores, nuevoSabor]);
+    } else {
+      setError("No puedes agregar más sabor debido al porcentaje disponible.");
+    }
+  };
+
+  const puedeAgregarSabor = (nuevoSabor) => {
+    const porcentajeActualPG = totalPG + (nuevoSabor.Base === "PG" ? parseFloat(nuevoSabor.porcentaje) : 0);
+    const porcentajeActualVG = totalVG + (nuevoSabor.Base === "VG" ? parseFloat(nuevoSabor.porcentaje) : 0);
+
+    return porcentajeActualPG <= pgValue && porcentajeActualVG <= vgValue;
   };
 
   const eliminarSabor = (indexToRemove) => {
@@ -48,6 +60,7 @@ function Sabores({ pgValue, vgValue }) {
   return (
     <div>
       <h2>Agregar Sabor</h2>
+      {error && <div>{error}</div>}
       <InputComponent onAñadirSabor={añadirSabor} />
 
       <h2>Lista de Sabores</h2>
