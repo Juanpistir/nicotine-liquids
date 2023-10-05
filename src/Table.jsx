@@ -1,5 +1,4 @@
 import React from "react";
-/* import Form from './Form' */
 import { useState } from "react";
 import Sabores from "./Sabores";
 
@@ -15,7 +14,7 @@ function Table({
 }) {
   //Calculos
   const TotalNicotineJuice = (cantidad * fuerza) / fuerzaNicotina;
-  const PorcentajeNic = (TotalNicotineJuice/cantidad)*100;
+  const PorcentajeNic = (TotalNicotineJuice / cantidad) * 100;
   console.log(pgNValue, vgNValue);
 
   const PgNic = TotalNicotineJuice * pgNValue * 0.01 * 1.036;
@@ -30,8 +29,8 @@ function Table({
   const GramsPg = CantidadPg * 1.036;
   const GramsVg = CantidadVg * 1.261;
 
-  const PorcentajePg = (CantidadPg/cantidad)*100
-  const PorcentajeVg = (CantidadVg/cantidad)*100
+  const PorcentajePg = (CantidadPg / cantidad) * 100;
+  const PorcentajeVg = (CantidadVg / cantidad) * 100;
 
   const SumatoriaGrams = GramsPg + GramsVg + NicGrams;
 
@@ -42,11 +41,13 @@ function Table({
   };
 
   //Funciones
-  const [mostrarContenido, setMostrarContenido] = useState(false);
 
-  const toggleContenido = () => {
-    // Cambiamos el estado para mostrar u ocultar el contenido
-    setMostrarContenido(!mostrarContenido);
+  // Agrega un estado para almacenar los sabores
+  const [sabores, setSabores] = useState([]);
+
+  // Función para manejar la adición de sabores
+  const handleAñadirSabor = (nuevoSabor) => {
+    setSabores([...sabores, nuevoSabor]);
   };
   return (
     <>
@@ -86,19 +87,19 @@ function Table({
             <td>&nbsp;</td>
           </tr>
 
-          {mostrarContenido && (
-            <>
               <tr>
                 <td>flavors</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+                <td colSpan="3">
+                  <ul>
+                    {/* Muestra los nombres y porcentajes de los sabores */}
+                    {sabores.map((sabor, index) => (
+                      <li key={index}>
+                        {sabor.nombre}: {sabor.porcentaje}%
+                      </li>
+                    ))}
+                  </ul>
+                </td>
               </tr>
-              <tr>
-                {/* Aquí puedes agregar más contenido relacionado con flavors */}
-              </tr>
-            </>
-          )}
 
           <tr>
             <td>&nbsp;total</td>
@@ -114,7 +115,7 @@ function Table({
       <Sabores
         pgValue={pgValue}
         vgValue={vgValue}
-        toggleContenido={toggleContenido}
+        onAñadirSabor={handleAñadirSabor}
       />
     </>
   );

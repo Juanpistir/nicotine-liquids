@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputComponent from "./InputComponent";
 
-function Sabores({ pgValue, vgValue }) {
+function Sabores({ pgValue, vgValue, onAñadirSabor }) {
   const [sabores, setSabores] = useState([]);
   const [totalPG, setTotalPG] = useState(0);
   const [totalVG, setTotalVG] = useState(0);
@@ -11,19 +11,20 @@ function Sabores({ pgValue, vgValue }) {
     calcularPorcentajeTotal();
   }, [sabores]);
 
-  const añadirSabor = (nuevoSabor) => {
-    if (puedeAgregarSabor(nuevoSabor)) {
-      setSabores([...sabores, nuevoSabor]);
-    } else {
-      setError("No puedes agregar más sabor debido al porcentaje disponible.");
-    }
-  };
-
   const puedeAgregarSabor = (nuevoSabor) => {
     const porcentajeActualPG = totalPG + (nuevoSabor.Base === "PG" ? parseFloat(nuevoSabor.porcentaje) : 0);
     const porcentajeActualVG = totalVG + (nuevoSabor.Base === "VG" ? parseFloat(nuevoSabor.porcentaje) : 0);
 
     return porcentajeActualPG <= pgValue && porcentajeActualVG <= vgValue;
+  };
+
+  const handleAñadirSabor = (nuevoSabor) => {
+    if (puedeAgregarSabor(nuevoSabor)) {
+      setSabores([...sabores, nuevoSabor]);
+      onAñadirSabor(nuevoSabor); // Llama a la función onAñadirSabor pasada como prop
+    } else {
+      setError("No puedes agregar más sabor debido al porcentaje disponible.");
+    }
   };
 
   const eliminarSabor = (indexToRemove) => {
@@ -61,7 +62,7 @@ function Sabores({ pgValue, vgValue }) {
     <div>
       <h2>Agregar Sabor</h2>
       {error && <div>{error}</div>}
-      <InputComponent onAñadirSabor={añadirSabor} />
+      <InputComponent onAñadirSabor={handleAñadirSabor} />
 
       <h2>Lista de Sabores</h2>
       {sabores.map((sabor, index) => (
