@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Table from "./Table";
+import TableSabores from "./TableSabores";
 
 function Form() {
   const [nombreEsencia, setNombreEsencia] = useState("");
@@ -144,7 +144,7 @@ function Form() {
       />
       <hr></hr>
       <h2>Tabla</h2>
-      <Table
+      <TableSabores
         nombreEsencia={nombreEsencia}
         cantidad={cantidad}
         fuerza={fuerza}
