@@ -10,6 +10,7 @@ function Table({
   vgValue,
   pgNValue,
   vgNValue,
+  descripcion,
 }) {
   // Agrega un estado para almacenar los sabores
 
@@ -17,6 +18,7 @@ function Table({
   const [totalPG, setTotalPG] = useState(0);
   const [totalVG, setTotalVG] = useState(0);
   const [error, setError] = useState("");
+  const [datosGuardados, setDatosGuardados] = useState([]);
 
   //Calculos
   const TotalNicotineJuice = (cantidad * fuerza) / fuerzaNicotina;
@@ -47,15 +49,14 @@ function Table({
 
   useEffect(() => {
     calcularPorcentajeTotal();
-  }, [sabores]);
+    console.log(datosGuardados);
+  }, [sabores, datosGuardados]);
 
   const puedeAgregarSabor = (nuevoSabor) => {
     const porcentajeActualPG =
-      totalPG +
-      (nuevoSabor.Base === "PG" ? parseFloat(nuevoSabor.porcentaje) : 0);
+      totalPG + (nuevoSabor.Base === "PG" && parseFloat(nuevoSabor.porcentaje));
     const porcentajeActualVG =
-      totalVG +
-      (nuevoSabor.Base === "VG" ? parseFloat(nuevoSabor.porcentaje) : 0);
+      totalVG + (nuevoSabor.Base === "VG" && parseFloat(nuevoSabor.porcentaje));
 
     return porcentajeActualPG <= pgValue && porcentajeActualVG <= vgValue;
   };
@@ -98,6 +99,60 @@ function Table({
     } else if (saborEliminado.Base === "VG") {
       setTotalVG(totalVG - parseFloat(saborEliminado.porcentaje));
     }
+  };
+
+  //Funcion de guardado de tablas
+  const guardarDatosTabla = () => {
+    if (!nombreEsencia) {
+      alert(
+        "Por favor, ingresa un nombre de esencia antes de guardar los datos."
+      );
+      return; // Evita guardar los datos si no hay un nombre de esencia
+    }
+
+    const nuevoDato = {
+      nombreEsencia, // Agrega el nombre de la esencia
+      descripcion,
+      nicotineJuice: {
+        mL: TotalNicotineJuice.toFixed(2),
+        Grams: NicGrams.toFixed(2),
+        Porcentaje: PorcentajeNic.toFixed(1),
+      },
+      pgDilutant: {
+        mL: CantidadPg.toFixed(2),
+        Grams: GramsPg.toFixed(2),
+        Porcentaje: PorcentajePg.toFixed(1),
+      },
+      vgDilutant: {
+        mL: CantidadVg.toFixed(2),
+        Grams: GramsVg.toFixed(2),
+        Porcentaje: PorcentajeVg.toFixed(1),
+      },
+      sabores: sabores.map((sabor, index) => ({
+        nombre: sabor.nombre,
+        GramsPgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
+        GramsVgSabores: ((sabor.porcentaje * cantidad) / 100).toFixed(2),
+        Porcentaje: sabor.porcentaje,
+      })),
+      total: {
+        mL: cantidad,
+        Grams: (
+          SumatoriaGrams +
+          (totalPG * cantidad) / 100 +
+          (totalVG * cantidad * 1.16) / 100
+        ).toFixed(1),
+        Porcentaje: "100",
+      },
+    }
+
+    const datosGuardadosPrevios = JSON.parse(localStorage.getItem("datosGuardados")) || [];
+
+    // Agrega el nuevo dato a los datos guardados previos
+    const nuevosDatosGuardados = [...datosGuardadosPrevios, nuevoDato];
+  
+    // Guarda los datos actualizados en el almacenamiento local
+    localStorage.setItem("datosGuardados", JSON.stringify(nuevosDatosGuardados));
+
   };
 
   return (
@@ -177,6 +232,8 @@ function Table({
           </tr>
         </tbody>
       </table>
+
+      <button onClick={guardarDatosTabla}>Guardar</button>
 
       <hr></hr>
       <h2>Sabores</h2>

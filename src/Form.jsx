@@ -4,6 +4,8 @@ import TableSabores from "./TableSabores";
 
 function Form() {
   const [nombreEsencia, setNombreEsencia] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+
 
   const [pgValue, setPgValue] = useState(50);
   const [vgValue, setVgValue] = useState(50);
@@ -145,11 +147,12 @@ function Form() {
       <hr></hr>
       <h2>Comentarios</h2>
       <p>Describenos la esencia, dinos alguna recomendación de la receta</p>
-      <textarea name="descripcion" id="1" cols="30" rows="10"></textarea>
+      <textarea name="descripcion" id="1" cols="30" rows="10" placeholder="Descripción" onChange={(e) => setDescripcion(e.target.value)} value={descripcion}></textarea>
       <hr></hr>
       <h2>Tabla</h2>
       <TableSabores
         nombreEsencia={nombreEsencia}
+        descripcion={descripcion}
         cantidad={cantidad}
         fuerza={fuerza}
         fuerzaNicotina={fuerzaNicotina}
