@@ -21,12 +21,12 @@ function Sabores({ pgValue, vgValue, onAñadirSabor }) {
   const handleAñadirSabor = (nuevoSabor) => {
     if (puedeAgregarSabor(nuevoSabor)) {
       setSabores([...sabores, nuevoSabor]);
-      onAñadirSabor(nuevoSabor); // Llama a la función onAñadirSabor pasada como prop
+      onAñadirSabor({ ...nuevoSabor, totalPG, totalVG }); // Incluye totalPG y totalVG
     } else {
       setError("No puedes agregar más sabor debido al porcentaje disponible.");
     }
   };
-
+  
   const eliminarSabor = (indexToRemove) => {
     const saborEliminado = sabores[indexToRemove];
     const nuevosSabores = sabores.filter((_, index) => index !== indexToRemove);

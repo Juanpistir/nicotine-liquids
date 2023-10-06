@@ -15,7 +15,6 @@ function Table({
   //Calculos
   const TotalNicotineJuice = (cantidad * fuerza) / fuerzaNicotina;
   const PorcentajeNic = (TotalNicotineJuice / cantidad) * 100;
-  console.log(pgNValue, vgNValue);
 
   const PgNic = TotalNicotineJuice * pgNValue * 0.01 * 1.036;
   const VgNic = TotalNicotineJuice * vgNValue * 0.01 * 1.261;
@@ -46,8 +45,10 @@ function Table({
   return (
     <>
       <h2>
-        Esencia: <span style={{fontStyle: "italic",
-    fontSize: "40px",}}>{nombreEsencia}</span>
+        Esencia:{" "}
+        <span style={{ fontStyle: "italic", fontSize: "40px" }}>
+          {nombreEsencia}
+        </span>
       </h2>
       <table>
         <tbody>
