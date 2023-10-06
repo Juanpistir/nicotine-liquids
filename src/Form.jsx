@@ -143,6 +143,10 @@ function Form() {
         value={tiempo}
       />
       <hr></hr>
+      <h2>Comentarios</h2>
+      <p>Describenos la esencia, dinos alguna recomendación de la receta</p>
+      <textarea name="descripcion" id="1" cols="30" rows="10"></textarea>
+      <hr></hr>
       <h2>Tabla</h2>
       <TableSabores
         nombreEsencia={nombreEsencia}
