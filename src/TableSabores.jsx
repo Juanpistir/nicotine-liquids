@@ -18,7 +18,6 @@ function Table({
   const [totalPG, setTotalPG] = useState(0);
   const [totalVG, setTotalVG] = useState(0);
   const [error, setError] = useState("");
-  const [datosGuardados, setDatosGuardados] = useState([]);
 
   //Calculos
   const TotalNicotineJuice = (cantidad * fuerza) / fuerzaNicotina;
@@ -45,12 +44,15 @@ function Table({
 
   const SumatoriaGrams = GramsPg + GramsVg + NicGrams;
 
+  //Variables para barra
+  const porcentajeRestante =
+    100 - (PorcentajePg + PorcentajeVg + PorcentajeNic);
+
   //Funciones
 
   useEffect(() => {
     calcularPorcentajeTotal();
-    console.log(datosGuardados);
-  }, [sabores, datosGuardados]);
+  }, [sabores]);
 
   const puedeAgregarSabor = (nuevoSabor) => {
     const porcentajeActualPG =
@@ -113,6 +115,7 @@ function Table({
     const nuevoDato = {
       nombreEsencia, // Agrega el nombre de la esencia
       descripcion,
+      porcentajeRestante,
       nicotineJuice: {
         mL: TotalNicotineJuice.toFixed(2),
         Grams: NicGrams.toFixed(2),
@@ -133,7 +136,7 @@ function Table({
         GramsVgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
         GramsPgSabores: ((sabor.porcentaje * cantidad) / 100).toFixed(2),
         Porcentaje: sabor.porcentaje,
-        Base: sabor.Base
+        Base: sabor.Base,
       })),
       total: {
         mL: cantidad,
@@ -238,6 +241,43 @@ function Table({
           </tr>
         </tbody>
       </table>
+
+      <div className="relative pt-1 mx-4">
+        <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200">
+          <div
+            style={{
+              width: `${PorcentajePg}%`,
+            }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+          >
+            PG
+          </div>
+          <div
+            style={{
+              width: `${PorcentajeVg}%`,
+            }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
+          >
+            VG
+          </div>
+          <div
+            style={{
+              width: `${PorcentajeNic}%`,
+            }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+          >
+            Nicotina
+          </div>
+          <div
+            style={{
+              width: `${porcentajeRestante}%`,
+            }}
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-slate-500"
+          >
+            Sabores
+          </div>
+        </div>
+      </div>
 
       <button onClick={guardarDatosTabla}>Guardar</button>
 
