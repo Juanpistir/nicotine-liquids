@@ -79,7 +79,7 @@ function Recetas() {
                 <tr key={index}>
                   <td>{sabor.nombre}</td>
                   <td>{sabor.GramsPgSabores}</td>
-                  <td>{sabor.GramsVgSabores}</td>
+                  <td>{sabor.Base === "PG" ? sabor.GramsPgSabores : sabor.GramsVgSabores}</td>
                   <td>{sabor.Porcentaje}</td>
                   <td></td>
                 </tr>

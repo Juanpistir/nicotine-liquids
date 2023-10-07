@@ -130,9 +130,10 @@ function Table({
       },
       sabores: sabores.map((sabor, index) => ({
         nombre: sabor.nombre,
-        GramsPgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
-        GramsVgSabores: ((sabor.porcentaje * cantidad) / 100).toFixed(2),
+        GramsVgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
+        GramsPgSabores: ((sabor.porcentaje * cantidad) / 100).toFixed(2),
         Porcentaje: sabor.porcentaje,
+        Base: sabor.Base
       })),
       total: {
         mL: cantidad,
@@ -143,16 +144,19 @@ function Table({
         ).toFixed(1),
         Porcentaje: "100",
       },
-    }
+    };
 
-    const datosGuardadosPrevios = JSON.parse(localStorage.getItem("datosGuardados")) || [];
+    const datosGuardadosPrevios =
+      JSON.parse(localStorage.getItem("datosGuardados")) || [];
 
     // Agrega el nuevo dato a los datos guardados previos
     const nuevosDatosGuardados = [...datosGuardadosPrevios, nuevoDato];
-  
-    // Guarda los datos actualizados en el almacenamiento local
-    localStorage.setItem("datosGuardados", JSON.stringify(nuevosDatosGuardados));
 
+    // Guarda los datos actualizados en el almacenamiento local
+    localStorage.setItem(
+      "datosGuardados",
+      JSON.stringify(nuevosDatosGuardados)
+    );
   };
 
   return (
@@ -208,7 +212,9 @@ function Table({
               <tr key={index}>
                 <td>&nbsp;{sabor.nombre}</td>
                 <td>&nbsp;{GramsPgSabores}</td>
-                <td style={{ fontWeight: "bold" }}>&nbsp;{GramsVgSabores}</td>
+                <td style={{ fontWeight: "bold" }}>
+                  &nbsp;{sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
+                </td>
                 <td>&nbsp;{sabor.porcentaje}</td>
                 <td>
                   <button onClick={() => eliminarSabor(index)}>Eliminar</button>
