@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar";
 import Form from "./Form";
 import Recetas from "./Recetas";
-import Acerca from './Acerca'
+import Acerca from "./Acerca";
 
 function App() {
   return (
@@ -15,11 +15,13 @@ function App() {
             </div>
           </div>
         </div>
-        <Routes>
-          <Route exact path="/" element={<Form />} />
-          <Route path="/recetasguardadas" element={<Recetas />} />
-          <Route path="/acerca-mi" element={<Acerca />} />
-        </Routes>
+        <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+          <Routes>
+            <Route exact path="/" element={<Form />} />
+            <Route path="/recetasguardadas" element={<Recetas />} />
+            <Route path="/acerca-mi" element={<Acerca />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </>
   );

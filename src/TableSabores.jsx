@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputComponent from "./InputComponent";
+import "./styles.css";
 
 function Table({
   nombreEsencia,
@@ -164,85 +165,101 @@ function Table({
 
   return (
     <>
-      <h2>
-        Esencia:{" "}
-        <span style={{ fontStyle: "italic", fontSize: "40px" }}>
-          {nombreEsencia}
-        </span>
-      </h2>
-      <table>
-        <tbody>
-          <tr>
-            <td>Ingrediente&nbsp;</td>
-            <td>mL</td>
-            <td>Grams</td>
-            <td>&nbsp;%</td>
-          </tr>
-          <tr>
-            <td>&nbsp;Nicotine juice</td>
-            <td>&nbsp;{TotalNicotineJuice.toFixed(2)}</td>
-            <td>&nbsp;{NicGrams.toFixed(2)}</td>
-            <td>&nbsp;{PorcentajeNic.toFixed(1)}</td>
-          </tr>
-          <tr>
-            <td>&nbsp;pg dilutant</td>
-            <td>&nbsp;{CantidadPg.toFixed(2)}</td>
-            <td>&nbsp;{GramsPg.toFixed(2)}</td>
-            <td>&nbsp;{PorcentajePg.toFixed(1)}</td>
-          </tr>
-          <tr>
-            <td>&nbsp;vg dilutant</td>
-            <td>&nbsp;{CantidadVg.toFixed(2)}</td>
-            <td>&nbsp;{GramsVg.toFixed(2)}</td>
-            <td>&nbsp;{PorcentajeVg.toFixed(1)}</td>
-          </tr>
-          <tr>
-            <td>&nbsp;total base</td>
-            <td>
-              &nbsp;{(TotalNicotineJuice + CantidadVg + CantidadPg).toFixed(1)}
-            </td>
-            <td>&nbsp;{SumatoriaGrams.toFixed(1)}</td>
-            <td>
-              &nbsp;{(PorcentajeNic + PorcentajePg + PorcentajeVg).toFixed(1)}
-            </td>
-          </tr>
+      <div className="overflow-x-auto">
+        {error && <div className="text-red-500 mb-4">{error}</div>}
+        <InputComponent onAñadirSabor={handleAñadirSabor} />
+        <div className="text-3xl font-bold mt-4">
+          <h2 className="text-lg font-bold mb-2 underline neon-text">Tabla</h2>
+          <span className="bg-gradient-to-r text-transparent bg-clip-text from-red-500 via-yellow-500 to-green-500 mb-2">
+            {nombreEsencia}
+          </span>
+        </div>
+        <table className="min-w-full border-collapse">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 bg-gray-200">Ingrediente</th>
+              <th className="py-2 px-4 bg-gray-200">mL</th>
+              <th className="py-2 px-4 bg-gray-200">Grams</th>
+              <th className="py-2 px-4 bg-gray-200">%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="py-2 px-4">Nicotine juice</td>
+              <td className="py-2 px-4">{TotalNicotineJuice.toFixed(2)}</td>
+              <td className="py-2 px-4">{NicGrams.toFixed(2)}</td>
+              <td className="py-2 px-4">{PorcentajeNic.toFixed(1)}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4">pg dilutant</td>
+              <td className="py-2 px-4">{CantidadPg.toFixed(2)}</td>
+              <td className="py-2 px-4">{GramsPg.toFixed(2)}</td>
+              <td className="py-2 px-4">{PorcentajePg.toFixed(1)}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4">vg dilutant</td>
+              <td className="py-2 px-4">{CantidadVg.toFixed(2)}</td>
+              <td className="py-2 px-4">{GramsVg.toFixed(2)}</td>
+              <td className="py-2 px-4">{PorcentajeVg.toFixed(1)}</td>
+            </tr>
+            <tr>
+              <td className="py-2 px-4">total base</td>
+              <td className="py-2 px-4">
+                {(TotalNicotineJuice + CantidadVg + CantidadPg).toFixed(1)}
+              </td>
+              <td className="py-2 px-4">{SumatoriaGrams.toFixed(1)}</td>
+              <td className="py-2 px-4">
+                {(PorcentajeNic + PorcentajePg + PorcentajeVg).toFixed(1)}
+              </td>
+            </tr>
 
-          {sabores.map((sabor, index) => {
-            let GramsVgSabores = (sabor.porcentaje * cantidad * 1.16) / 100;
-            let GramsPgSabores = (sabor.porcentaje * cantidad) / 100;
+            {sabores.map((sabor, index) => {
+              let GramsVgSabores = (
+                (sabor.porcentaje * cantidad * 1.16) /
+                100
+              ).toFixed(2);
+              let GramsPgSabores = (
+                (sabor.porcentaje * cantidad) /
+                100
+              ).toFixed(2);
 
-            return (
-              <tr key={index}>
-                <td>&nbsp;{sabor.nombre}</td>
-                <td>&nbsp;{GramsPgSabores}</td>
-                <td style={{ fontWeight: "bold" }}>
-                  &nbsp;{sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
-                </td>
-                <td>&nbsp;{sabor.porcentaje}</td>
-                <td>
-                  <button onClick={() => eliminarSabor(index)}>Eliminar</button>
-                </td>
-              </tr>
-            );
-          })}
+              return (
+                <tr key={index}>
+                  <td className="py-2 px-4">
+                    {sabor.nombre}{" "}
+                    <button
+                      onClick={() => eliminarSabor(index)}
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300"
+                    >
+                      X
+                    </button>
+                  </td>
+                  <td className="py-2 px-4">{GramsPgSabores}</td>
+                  <td className="py-2 px-4 font-bold">
+                    {sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
+                  </td>
+                  <td className="py-2 px-4">{sabor.porcentaje}</td>
+                  <td className="py-2 px-4"></td>
+                </tr>
+              );
+            })}
 
-          <tr>
-            <td>&nbsp;Total</td>
-            <td>&nbsp;{cantidad}</td>
-            <td>
-              &nbsp;
-              {(
-                SumatoriaGrams +
-                (totalPG * cantidad) / 100 +
-                (totalVG * cantidad * 1.16) / 100
-              ).toFixed(1)}
-            </td>
-            <td>&nbsp;{100}</td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td className="py-2 px-4">Total</td>
+              <td className="py-2 px-4">{cantidad}</td>
+              <td className="py-2 px-4">
+                {(
+                  SumatoriaGrams +
+                  (totalPG * cantidad) / 100 +
+                  (totalVG * cantidad * 1.16) / 100
+                ).toFixed(1)}
+              </td>
+              <td className="py-2 px-4">100</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div className="relative pt-1 mx-4">
+        {/* <div className="relative pt-1 mx-4"> */}
         <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200">
           <div
             style={{
@@ -277,14 +294,14 @@ function Table({
             Sabores
           </div>
         </div>
+
+        <button
+          onClick={guardarDatosTabla}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+        >
+          Guardar
+        </button>
       </div>
-
-      <button onClick={guardarDatosTabla}>Guardar</button>
-
-      <hr></hr>
-      <h2>Sabores</h2>
-      {error && <div>{error}</div>}
-      <InputComponent onAñadirSabor={handleAñadirSabor} />
     </>
   );
 }
