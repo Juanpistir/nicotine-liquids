@@ -25,7 +25,7 @@ function InputComponent({ onAñadirSabor }) {
   };
 
   return (
-    <div>
+    <>
       <h2 className="text-4xl mb-2 mt-4 font-bold neon-text text-slate-700 text-center">Aromas</h2>
       <input
         type="text"
@@ -67,7 +67,7 @@ function InputComponent({ onAñadirSabor }) {
           <span className="ml-1">VG</span>
         </label>
       </div>
-    </div>
+    </>
   );
 }
 

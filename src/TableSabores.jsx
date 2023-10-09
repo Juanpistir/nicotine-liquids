@@ -104,6 +104,11 @@ function Table({
     }
   };
 
+  function generarIdUnico() {
+    return new Date().getTime(); // Usamos la marca de tiempo actual como ID
+  }
+
+
   //Funcion de guardado de tablas
   const guardarDatosTabla = () => {
     if (!nombreEsencia) {
@@ -114,6 +119,7 @@ function Table({
     }
 
     const nuevoDato = {
+      id: generarIdUnico(),
       nombreEsencia, // Agrega el nombre de la esencia
       descripcion,
       porcentajeRestante,
@@ -132,7 +138,8 @@ function Table({
         Grams: GramsVg.toFixed(2),
         Porcentaje: PorcentajeVg.toFixed(1),
       },
-      sabores: sabores.map((sabor, index) => ({
+      sabores: sabores.map(sabor => ({
+        id: generarIdUnico(),
         nombre: sabor.nombre,
         GramsVgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
         GramsPgSabores: ((sabor.porcentaje * cantidad) / 100).toFixed(2),
@@ -215,7 +222,7 @@ function Table({
               </td>
             </tr>
 
-            {sabores.map((sabor, index) => {
+            {sabores.map(sabor => {
               let GramsVgSabores = (
                 (sabor.porcentaje * cantidad * 1.16) /
                 100
@@ -226,7 +233,7 @@ function Table({
               ).toFixed(2);
 
               return (
-                <tr key={index} className="text-center">
+                <tr key={sabor.id} className="text-center">
                   <td className="py-2 px-4 font-semibold">
                     {sabor.nombre}
                     <button

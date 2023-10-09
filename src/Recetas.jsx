@@ -13,8 +13,8 @@ function Recetas() {
     }
   }, []);
 
-  const eliminarDato = (index) => {
-    const nuevosDatosGuardados = datosGuardados.filter((_, i) => i !== index);
+  const eliminarDato = (id) => {
+    const nuevosDatosGuardados = datosGuardados.filter(dato => dato.id !== id);
     setDatosGuardados(nuevosDatosGuardados);
 
     // Actualiza el almacenamiento local con los nuevos datos
@@ -35,13 +35,13 @@ function Recetas() {
   };
 
   return (
-    <div>
+    <>
       <h1 className="text-4xl font-bold p-4">
         Tus recetas guardadas:
       </h1>
       <ul>
-        {datosGuardados.map((dato, index) => (
-          <li key={index} className="mb-4">
+        {datosGuardados.map(dato => (
+          <li key={dato.id} className="mb-4">
             <div className="flex items-center">
               <p
                 onClick={() => toggleEsenciaSeleccionada(dato)}
@@ -51,7 +51,7 @@ function Recetas() {
                 {dato.nombreEsencia}
               </p>
               <button
-                onClick={() => {eliminarDato(index); toggleEsenciaSeleccionada(dato)}}
+                onClick={() => {eliminarDato(dato.id); toggleEsenciaSeleccionada(dato)}}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300 ml-2"
               >
                 Eliminar
@@ -98,8 +98,8 @@ function Recetas() {
                   <td>{esenciaSeleccionada.vgDilutant.Porcentaje}</td>
                   <td></td>
                 </tr>
-                {esenciaSeleccionada.sabores.map((sabor, index) => (
-                  <tr key={index}>
+                {esenciaSeleccionada.sabores.map(sabor => (
+                  <tr key={sabor.id}>
                     <td className="text-slate-200">{sabor.nombre}</td>
                     <td>{sabor.GramsPgSabores}</td>
                     <td>
@@ -160,7 +160,7 @@ function Recetas() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 export default Recetas;
