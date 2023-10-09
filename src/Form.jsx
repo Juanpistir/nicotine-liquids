@@ -48,143 +48,143 @@ function Form() {
   //<div className="flex-auto">
 
   return (
-    <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <div>
-          <h2 className="text-lg font-bold mb-2 underline neon-text">Principal</h2>
-          <label className="block">Nombre</label>
-          <div className="mb-2">
-            <input
-              placeholder="Nombre de la esencia"
-              type="text"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2"
-              onChange={(e) => setNombreEsencia(e.target.value)}
-              value={nombreEsencia}
-            />
-          </div>
-          <label className="block">Descripción</label>
-          <div className="mb-2">
-            <textarea
-              name="descripcion"
-              id="1"
-              cols="30"
-              rows="10"
-              placeholder="Descripción de la receta, detalles importantes para su realización"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2 h-20"
-              onChange={(e) => setDescripcion(e.target.value)}
-              value={descripcion}
-            ></textarea>
-          </div>
-          <label className="block">Cantidad a realizar</label>
-          <div className="mb-2 flex items-center">
-            <input
-              name="cantidad"
-              type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2"
-              placeholder="ml"
-              min="0"
-              onChange={(e) => setCantidad(e.target.value)}
-              value={cantidad}
-            />
-            <span className="bg-gray-200 text-gray-600 p-2 ml-2">mL</span>
-          </div>
-          <label className="block">Nicotina deseada en la esencia</label>
-          <div className="mb-2 flex items-center">
-            <input
-              name="fuerza"
-              type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2"
-              placeholder="mg"
-              min="0"
-              onChange={(e) => setFuerza(e.target.value)}
-              value={fuerza}
-            />
-            <span className="bg-gray-200 text-gray-600 p-2 ml-2">Mg</span>
-          </div>
-          <div>
-            <label className="block">Ratio PG/VG deseado</label>
-            <div className="mb-2 flex items-center">
-              <input
-                name="ratioPG"
-                type="number"
-                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
-                placeholder="PG"
-                onChange={handleRatioChange}
-                value={pgValue}
-              />
-              <input
-                name="ratioVG"
-                type="number"
-                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4 ml-1"
-                placeholder="VG"
-                onChange={(e) =>
-                  handleRatioChange({
-                    target: { value: 100 - parseInt(e.target.value, 10) },
-                  })
-                }
-                value={vgValue}
-              />
-              <span className="bg-gray-200 text-gray-600 p-2 ml-2">%</span>
-            </div>
-          </div>
-          <div>{error}</div>
+    <div className="mb-4 mx-2 grid grid-cols-1  md:grid-cols-2 gap-6">
+      <div className="mx-auto">
+        <h2 className="text-4xl my-2 font-bold neon-text text-slate-700 text-center">
+          Principal
+        </h2>
+        <label className="block">Nombre</label>
+        <div className="mb-2">
+          <input
+            placeholder="Nombre de la esencia"
+            type="text"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full"
+            onChange={(e) => setNombreEsencia(e.target.value)}
+            value={nombreEsencia}
+          />
         </div>
-        <div className="flex-auto">
-          <h2 className="text-lg font-bold mb-2 underline neon-text">Nicotina</h2>
-          <label className="block">Fuerza de la base de nicotina</label>
+        <label className="block">Descripción</label>
+        <div className="mb-2">
+          <textarea
+            name="descripcion"
+            id="1"
+            cols="30"
+            rows="10"
+            placeholder="Descripción de la receta, detalles importantes para su realización"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full h-20"
+            onChange={(e) => setDescripcion(e.target.value)}
+            value={descripcion}
+          ></textarea>
+        </div>
+        <label className="block">Cantidad a realizar</label>
+        <div className="mb-2 flex items-center">
+          <input
+            name="cantidad"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full"
+            placeholder="ml"
+            min="0"
+            onChange={(e) => setCantidad(e.target.value)}
+            value={cantidad}
+          />
+          <span className="bg-gray-200 text-gray-600 p-2 ml-2">mL</span>
+        </div>
+        <label className="block">Nicotina deseada en la esencia</label>
+        <div className="mb-2 flex items-center">
+          <input
+            name="fuerza"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full"
+            placeholder="mg"
+            min="0"
+            onChange={(e) => setFuerza(e.target.value)}
+            value={fuerza}
+          />
+          <span className="bg-gray-200 text-gray-600 p-2 ml-2">Mg</span>
+        </div>
+        <div>
+          <label className="block">Ratio PG/VG deseado</label>
           <div className="mb-2 flex items-center">
             <input
-              name="fuerzan"
+              name="ratioPG"
               type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2"
-              placeholder="mg"
-              min="0"
-              onChange={(e) => setFuerzaNicotina(e.target.value)}
-              value={fuerzaNicotina}
-            />
-            <span className="bg-gray-200 text-gray-600 p-2 ml-2">Mg</span>
-          </div>
-          <label className="block">Ratio PG/VG de nicotina</label>
-          <div className="mb-2 flex items-center">
-            <input
-              name="rationNicotinePG"
-              type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-1/2"
               placeholder="PG"
-              onChange={(e) =>
-                handleNicotineRatioChange({
-                  target: { value: parseInt(e.target.value, 10) },
-                })
-              }
-              value={pgNValue}
+              onChange={handleRatioChange}
+              value={pgValue}
             />
             <input
-              name="rationNicotineVG"
+              name="ratioVG"
               type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/4 ml-1"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-1/2 ml-1"
               placeholder="VG"
               onChange={(e) =>
-                handleNicotineRatioChange({
+                handleRatioChange({
                   target: { value: 100 - parseInt(e.target.value, 10) },
                 })
               }
-              value={vgNValue}
+              value={vgValue}
             />
             <span className="bg-gray-200 text-gray-600 p-2 ml-2">%</span>
           </div>
+          <div>{error}</div>
+        </div>
+        <h2 className="text-4xl my-4 font-bold neon-text text-slate-700 text-center">
+          Nicotina
+        </h2>
+        <label className="block">Fuerza de la base de nicotina</label>
+        <div className="mb-2 flex items-center">
+          <input
+            name="fuerzan"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full"
+            placeholder="mg"
+            min="0"
+            onChange={(e) => setFuerzaNicotina(e.target.value)}
+            value={fuerzaNicotina}
+          />
+          <span className="bg-gray-200 text-gray-600 p-2 ml-2">Mg</span>
+        </div>
+        <label className="block">Ratio PG/VG de nicotina</label>
+        <div className="mb-2 flex items-center">
+          <input
+            name="rationNicotinePG"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-1/2"
+            placeholder="PG"
+            onChange={(e) =>
+              handleNicotineRatioChange({
+                target: { value: parseInt(e.target.value, 10) },
+              })
+            }
+            value={pgNValue}
+          />
+          <input
+            name="rationNicotineVG"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-1/2 ml-1"
+            placeholder="VG"
+            onChange={(e) =>
+              handleNicotineRatioChange({
+                target: { value: 100 - parseInt(e.target.value, 10) },
+              })
+            }
+            value={vgNValue}
+          />
+          <span className="bg-gray-200 text-gray-600 p-2 ml-2">%</span>
+        </div>
 
-          <label className="block">Tiempo sugerido de remojo</label>
-          <div className="mb-2 flex items-center">
-            <input
-              name="tiempo"
-              type="number"
-              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300 w-1/2"
-              placeholder="Días"
-              onChange={(e) => setTiempo(e.target.value)}
-              value={tiempo}
-            />
-            <span className="bg-gray-200 text-gray-600 p-2 ml-2">Días</span>
-          </div>
+        <label className="block">Tiempo sugerido de remojo</label>
+        <div className="mb-2 flex items-center">
+          <input
+            name="tiempo"
+            type="number"
+            className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-pink-600 w-full"
+            placeholder="Días"
+            onChange={(e) => setTiempo(e.target.value)}
+            value={tiempo}
+          />
+          <span className="bg-gray-200 text-gray-600 p-2 ml-2">Días</span>
         </div>
       </div>
       <TableSabores

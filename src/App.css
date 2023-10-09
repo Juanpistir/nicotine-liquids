@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Vibur"; /*Can be any text*/
+  src: local("Vibur-Regular"),
+    url("./fonts/Vibur-Regular.ttf") format("truetype");
+
+}
+
+@font-face {
+font-family: "Facon";
+src: local("Facon"),
+  url("./fonts/Facon.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GoGoPosterPunch";
+  src: local("GoGoPosterPunch"),
+    url("./fonts/GoGoPosterPunch.otf") format("opentype");
+  }

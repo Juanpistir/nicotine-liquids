@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import close from "./assets/close.svg"; // Ubicación específica de close.svg
-import logo from "./assets/logo.svg"; // Ubicación específica de logo.svg
+import logo from "./assets/logo3.jpg"; // Ubicación específica de logo.svg
 import menu from "./assets/menu.svg";
 
 export const navLinks = [
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
-      <img src={logo} alt="logo" style={{ width: "100px", height: "auto" }} />
+      <img src={logo} alt="logo" style={{ width: "200px", height: "auto" }} />
       {/* <h1 className="text-3xl text-white"><img src={logo} /></h1> */}
       
       {/* Desktop Navigation */}

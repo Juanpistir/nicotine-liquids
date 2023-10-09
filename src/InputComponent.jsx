@@ -25,8 +25,8 @@ function InputComponent({ onAñadirSabor }) {
   };
 
   return (
-    <div className="mb-4">
-      <h2 className="text-xl font-bold mt-4 mb-2 underline neon-text text-red-700">Sabores</h2>
+    <div>
+      <h2 className="text-4xl mb-2 mt-4 font-bold neon-text text-slate-700 text-center">Aromas</h2>
       <input
         type="text"
         placeholder="Sabor"

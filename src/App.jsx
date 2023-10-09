@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Form from "./Form";
 import Recetas from "./Recetas";
 import Acerca from "./Acerca";
+import "./App.css"
 
 function App() {
   return (

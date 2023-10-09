@@ -165,45 +165,47 @@ function Table({
 
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="flex flex-col justify-between mx-auto ">
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <InputComponent onAñadirSabor={handleAñadirSabor} />
-        <div className="text-3xl font-bold mt-4">
-          <h2 className="text-lg font-bold mb-2 underline neon-text">Tabla</h2>
-          <span className="bg-gradient-to-r text-transparent bg-clip-text from-red-500 via-yellow-500 to-green-500 mb-2">
-            {nombreEsencia}
-          </span>
-        </div>
-        <table className="min-w-full border-collapse">
+
+        <h2 className="text-center text-4xl mb-2 font-bold neon-text text-slate-700 underline">
+          Tabla
+        </h2>
+
+        <h1 className="text-center text-4xl font-bold text-outline uppercase mb-2 facon ">
+          {nombreEsencia}
+        </h1>
+        <table className="font-semibold ">
           <thead>
-            <tr>
-              <th className="py-2 px-4 bg-gray-200">Ingrediente</th>
+            <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border border-gray-600">
+              <th className="py-2 px-4 bg-gray-200">Ingredientes</th>
               <th className="py-2 px-4 bg-gray-200">mL</th>
-              <th className="py-2 px-4 bg-gray-200">Grams</th>
+              <th className="py-2 px-4 bg-gray-200">Gramos</th>
               <th className="py-2 px-4 bg-gray-200">%</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-2 px-4">Nicotine juice</td>
+            <tr className="text-center">
+              <td className="py-2 px-4">Jugo de Nicotina</td>
               <td className="py-2 px-4">{TotalNicotineJuice.toFixed(2)}</td>
               <td className="py-2 px-4">{NicGrams.toFixed(2)}</td>
               <td className="py-2 px-4">{PorcentajeNic.toFixed(1)}</td>
             </tr>
-            <tr>
-              <td className="py-2 px-4">pg dilutant</td>
+            <tr className="text-center">
+              <td className="py-2 px-4">Diluyente PG</td>
               <td className="py-2 px-4">{CantidadPg.toFixed(2)}</td>
               <td className="py-2 px-4">{GramsPg.toFixed(2)}</td>
               <td className="py-2 px-4">{PorcentajePg.toFixed(1)}</td>
             </tr>
-            <tr>
-              <td className="py-2 px-4">vg dilutant</td>
+            <tr className="text-center">
+              <td className="py-2 px-4">Diluyente VG</td>
               <td className="py-2 px-4">{CantidadVg.toFixed(2)}</td>
               <td className="py-2 px-4">{GramsVg.toFixed(2)}</td>
               <td className="py-2 px-4">{PorcentajeVg.toFixed(1)}</td>
             </tr>
-            <tr>
-              <td className="py-2 px-4">total base</td>
+            <tr className="text-center">
+              <td className="py-2 px-4">Base Total</td>
               <td className="py-2 px-4">
                 {(TotalNicotineJuice + CantidadVg + CantidadPg).toFixed(1)}
               </td>
@@ -224,9 +226,9 @@ function Table({
               ).toFixed(2);
 
               return (
-                <tr key={index}>
-                  <td className="py-2 px-4">
-                    {sabor.nombre}{" "}
+                <tr key={index} className="text-center">
+                  <td className="py-2 px-4 font-semibold">
+                    {sabor.nombre}
                     <button
                       onClick={() => eliminarSabor(index)}
                       className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300"
@@ -235,16 +237,15 @@ function Table({
                     </button>
                   </td>
                   <td className="py-2 px-4">{GramsPgSabores}</td>
-                  <td className="py-2 px-4 font-bold">
+                  <td className="py-2 px-4">
                     {sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
                   </td>
                   <td className="py-2 px-4">{sabor.porcentaje}</td>
-                  <td className="py-2 px-4"></td>
                 </tr>
               );
             })}
 
-            <tr>
+            <tr className="text-center">
               <td className="py-2 px-4">Total</td>
               <td className="py-2 px-4">{cantidad}</td>
               <td className="py-2 px-4">
@@ -259,13 +260,12 @@ function Table({
           </tbody>
         </table>
 
-        {/* <div className="relative pt-1 mx-4"> */}
-        <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200">
+        <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 mx-4 ring-2 ring-slate-700">
           <div
             style={{
               width: `${PorcentajePg}%`,
             }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
           >
             PG
           </div>
@@ -273,7 +273,7 @@ function Table({
             style={{
               width: `${PorcentajeVg}%`,
             }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"
           >
             VG
           </div>
@@ -281,7 +281,7 @@ function Table({
             style={{
               width: `${PorcentajeNic}%`,
             }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500"
           >
             Nicotina
           </div>
@@ -289,15 +289,15 @@ function Table({
             style={{
               width: `${porcentajeRestante}%`,
             }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-slate-500"
+            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
           >
-            Sabores
+            Aromas
           </div>
         </div>
 
         <button
           onClick={guardarDatosTabla}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-1/2 mx-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
         >
           Guardar
         </button>

@@ -24,60 +24,75 @@ function Recetas() {
     );
   };
 
+  const toggleEsenciaSeleccionada = (dato) => {
+    if (esenciaSeleccionada && esenciaSeleccionada.nombreEsencia === dato.nombreEsencia) {
+      // Si ya está seleccionada, ocúltala
+      setEsenciaSeleccionada(null);
+    } else {
+      // De lo contrario, muestra los datos de la esencia seleccionada
+      setEsenciaSeleccionada(dato);
+    }
+  };
+
   return (
     <div>
-      <h2>Recetas Guardadas</h2>
+      <h1 className="text-4xl font-bold p-4">
+        Tus recetas guardadas:
+      </h1>
       <ul>
         {datosGuardados.map((dato, index) => (
-          <li key={index}>
-            <div>
+          <li key={index} className="mb-4">
+            <div className="flex items-center">
               <p
-                // Agrega un evento onClick para seleccionar la esencia
-                onClick={() => setEsenciaSeleccionada(dato)}
+                onClick={() => toggleEsenciaSeleccionada(dato)}
                 style={{ cursor: "pointer" }}
+                className="text-2xl text-black hover:text-blue-900 font-bold"
               >
-                Nombre de la esencia: {dato.nombreEsencia}
+                {dato.nombreEsencia}
               </p>
-              <button onClick={() => eliminarDato(index)}>Eliminar</button>
+              <button
+                onClick={() => {eliminarDato(index); toggleEsenciaSeleccionada(dato)}}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300 ml-2"
+              >
+                Eliminar
+              </button>
             </div>
           </li>
         ))}
       </ul>
 
       {esenciaSeleccionada && (
-        <>
-          <div>
-            <h3>
-              Datos de la Esencia Seleccionada:{" "}
+        <div>
+          <div className="flex flex-col justify-between mx-auto px-4">
+            <h3 className="text-center text-4xl font-bold text-outline uppercase mb-2 facon">
               {esenciaSeleccionada.nombreEsencia}
             </h3>
-            <table>
+            <table className="font-bold text-center">
               <thead>
-                <tr>
-                  <th>Ingrediente</th>
-                  <th>mL</th>
-                  <th>Grams</th>
-                  <th>%</th>
-                  <th>Acciones</th>
+                <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border border-gray-600">
+                  <th className="py-2 px-4 bg-gray-200">Ingredientes</th>
+                  <th className="py-2 px-4 bg-gray-200">mL</th>
+                  <th className="py-2 px-4 bg-gray-200">Gramos</th>
+                  <th className="py-2 px-4 bg-gray-200">%</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Nicotine juice</td>
+                  <td>Jugo de Nicotina</td>
                   <td>{esenciaSeleccionada.nicotineJuice.mL}</td>
                   <td>{esenciaSeleccionada.nicotineJuice.Grams}</td>
                   <td>{esenciaSeleccionada.nicotineJuice.Porcentaje}</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>pg dilutant</td>
+                  <td>Diluyente PG</td>
                   <td>{esenciaSeleccionada.pgDilutant.mL}</td>
                   <td>{esenciaSeleccionada.pgDilutant.Grams}</td>
                   <td>{esenciaSeleccionada.pgDilutant.Porcentaje}</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <td>vg dilutant</td>
+                  <td>Diluyente VG</td>
                   <td>{esenciaSeleccionada.vgDilutant.mL}</td>
                   <td>{esenciaSeleccionada.vgDilutant.Grams}</td>
                   <td>{esenciaSeleccionada.vgDilutant.Porcentaje}</td>
@@ -85,7 +100,7 @@ function Recetas() {
                 </tr>
                 {esenciaSeleccionada.sabores.map((sabor, index) => (
                   <tr key={index}>
-                    <td>{sabor.nombre}</td>
+                    <td className="text-slate-200">{sabor.nombre}</td>
                     <td>{sabor.GramsPgSabores}</td>
                     <td>
                       {sabor.Base === "PG"
@@ -108,12 +123,12 @@ function Recetas() {
           </div>
 
           <div className="relative pt-1 mx-4">
-            <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200">
+            <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 mx-4 ring-2 ring-slate-700">
               <div
                 style={{
                   width: `${esenciaSeleccionada.pgDilutant.Porcentaje}%`,
                 }}
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
               >
                 PG
               </div>
@@ -121,7 +136,7 @@ function Recetas() {
                 style={{
                   width: `${esenciaSeleccionada.vgDilutant.Porcentaje}%`,
                 }}
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-orange-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"
               >
                 VG
               </div>
@@ -129,7 +144,7 @@ function Recetas() {
                 style={{
                   width: `${esenciaSeleccionada.nicotineJuice.Porcentaje}%`,
                 }}
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-emerald-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500"
               >
                 Nicotina
               </div>
@@ -137,16 +152,15 @@ function Recetas() {
                 style={{
                   width: `${esenciaSeleccionada.porcentajeRestante}%`,
                 }}
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-slate-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
               >
-                Sabores
+                Aromas
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
 }
-
 export default Recetas;
