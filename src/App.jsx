@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar";
 import Form from "./Form";
 import Recetas from "./Recetas";
@@ -8,7 +8,7 @@ import "./App.css"
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <HashRouter>
         <div className="bg-primary w-full overflow-hidden">
           <div className={`sm:px-16 px-6 flex justify-center items-center`}>
             <div className={`xl:max-w-[1280px] w-full`}>
@@ -23,7 +23,7 @@ function App() {
             <Route path="/acerca-mi" element={<Acerca />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }
