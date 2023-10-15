@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputComponent from "./InputComponent";
 import "./styles.css";
+import ModalMensaje from "./ModalMensaje";
 
 function Table({
   nombreEsencia,
@@ -12,9 +13,12 @@ function Table({
   pgNValue,
   vgNValue,
   descripcion,
+  tiempo,
 }) {
   // Agrega un estado para almacenar los sabores
 
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState("");
   const [sabores, setSabores] = useState([]);
   const [totalPG, setTotalPG] = useState(0);
   const [totalVG, setTotalVG] = useState(0);
@@ -67,17 +71,21 @@ function Table({
   const handleAñadirSabor = (nuevoSabor) => {
     if (puedeAgregarSabor(nuevoSabor)) {
       setSabores([...sabores, nuevoSabor]);
-      onAñadirSabor({ ...nuevoSabor, totalPG, totalVG }); // Incluye totalPG y totalVG
+      setError("");
     } else {
       setError("No puedes agregar más sabor debido al porcentaje disponible.");
     }
   };
 
-  const eliminarSabor = (indexToRemove) => {
-    const saborEliminado = sabores[indexToRemove];
-    const nuevosSabores = sabores.filter((_, index) => index !== indexToRemove);
-    setSabores(nuevosSabores);
-    restarPorcentaje(saborEliminado);
+  const eliminarSabor = (saborId) => {
+    const saborEliminado = sabores.find((sabor) => sabor.id === saborId);
+
+    if (saborEliminado) {
+      const nuevosSabores = sabores.filter((sabor) => sabor.id !== saborId);
+      setSabores(nuevosSabores);
+      // Llama a la función para restar el porcentaje
+      restarPorcentaje(saborEliminado);
+    }
   };
 
   const calcularPorcentajeTotal = () => {
@@ -108,7 +116,6 @@ function Table({
     return new Date().getTime(); // Usamos la marca de tiempo actual como ID
   }
 
-
   //Funcion de guardado de tablas
   const guardarDatosTabla = () => {
     if (!nombreEsencia) {
@@ -118,10 +125,14 @@ function Table({
       return; // Evita guardar los datos si no hay un nombre de esencia
     }
 
+    setMensajeModal("¡Esencia guardada!");
+    setMostrarModal(true);
+
     const nuevoDato = {
       id: generarIdUnico(),
       nombreEsencia, // Agrega el nombre de la esencia
       descripcion,
+      tiempo,
       porcentajeRestante,
       nicotineJuice: {
         mL: TotalNicotineJuice.toFixed(2),
@@ -138,7 +149,7 @@ function Table({
         Grams: GramsVg.toFixed(2),
         Porcentaje: PorcentajeVg.toFixed(1),
       },
-      sabores: sabores.map(sabor => ({
+      sabores: sabores.map((sabor) => ({
         id: generarIdUnico(),
         nombre: sabor.nombre,
         GramsVgSabores: ((sabor.porcentaje * cantidad * 1.16) / 100).toFixed(2),
@@ -171,145 +182,155 @@ function Table({
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-between mx-auto ">
-        {error && <div className="text-red-500 mb-4">{error}</div>}
-        <InputComponent onAñadirSabor={handleAñadirSabor} />
-
-        <h2 className="text-center text-4xl mb-2 font-bold neon-text text-slate-700 underline">
-          Tabla
-        </h2>
-
-        <h1 className="text-center text-4xl font-bold text-outline uppercase mb-2 facon ">
-          {nombreEsencia}
-        </h1>
-        <table className="font-semibold ">
-          <thead>
-            <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border border-gray-600">
-              <th className="py-2 px-4 bg-gray-200">Ingredientes</th>
-              <th className="py-2 px-4 bg-gray-200">mL</th>
-              <th className="py-2 px-4 bg-gray-200">Gramos</th>
-              <th className="py-2 px-4 bg-gray-200">%</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="text-center">
-              <td className="py-2 px-4">Jugo de Nicotina</td>
-              <td className="py-2 px-4">{TotalNicotineJuice.toFixed(2)}</td>
-              <td className="py-2 px-4">{NicGrams.toFixed(2)}</td>
-              <td className="py-2 px-4">{PorcentajeNic.toFixed(1)}</td>
-            </tr>
-            <tr className="text-center">
-              <td className="py-2 px-4">Diluyente PG</td>
-              <td className="py-2 px-4">{CantidadPg.toFixed(2)}</td>
-              <td className="py-2 px-4">{GramsPg.toFixed(2)}</td>
-              <td className="py-2 px-4">{PorcentajePg.toFixed(1)}</td>
-            </tr>
-            <tr className="text-center">
-              <td className="py-2 px-4">Diluyente VG</td>
-              <td className="py-2 px-4">{CantidadVg.toFixed(2)}</td>
-              <td className="py-2 px-4">{GramsVg.toFixed(2)}</td>
-              <td className="py-2 px-4">{PorcentajeVg.toFixed(1)}</td>
-            </tr>
-            <tr className="text-center">
-              <td className="py-2 px-4">Base Total</td>
-              <td className="py-2 px-4">
-                {(TotalNicotineJuice + CantidadVg + CantidadPg).toFixed(1)}
-              </td>
-              <td className="py-2 px-4">{SumatoriaGrams.toFixed(1)}</td>
-              <td className="py-2 px-4">
-                {(PorcentajeNic + PorcentajePg + PorcentajeVg).toFixed(1)}
-              </td>
-            </tr>
-
-            {sabores.map(sabor => {
-              let GramsVgSabores = (
-                (sabor.porcentaje * cantidad * 1.16) /
-                100
-              ).toFixed(2);
-              let GramsPgSabores = (
-                (sabor.porcentaje * cantidad) /
-                100
-              ).toFixed(2);
-
-              return (
-                <tr key={sabor.id} className="text-center">
-                  <td className="py-2 px-4 font-semibold">
-                    {sabor.nombre}
-                    <button
-                      onClick={() => eliminarSabor(index)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300"
-                    >
-                      X
-                    </button>
-                  </td>
-                  <td className="py-2 px-4">{GramsPgSabores}</td>
-                  <td className="py-2 px-4">
-                    {sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
-                  </td>
-                  <td className="py-2 px-4">{sabor.porcentaje}</td>
-                </tr>
-              );
-            })}
-
-            <tr className="text-center">
-              <td className="py-2 px-4">Total</td>
-              <td className="py-2 px-4">{cantidad}</td>
-              <td className="py-2 px-4">
-                {(
-                  SumatoriaGrams +
-                  (totalPG * cantidad) / 100 +
-                  (totalVG * cantidad * 1.16) / 100
-                ).toFixed(1)}
-              </td>
-              <td className="py-2 px-4">100</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 mx-4 ring-2 ring-slate-700">
-          <div
-            style={{
-              width: `${PorcentajePg}%`,
-            }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-          >
-            PG
-          </div>
-          <div
-            style={{
-              width: `${PorcentajeVg}%`,
-            }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"
-          >
-            VG
-          </div>
-          <div
-            style={{
-              width: `${PorcentajeNic}%`,
-            }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500"
-          >
-            Nicotina
-          </div>
-          <div
-            style={{
-              width: `${porcentajeRestante}%`,
-            }}
-            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
-          >
-            Aromas
-          </div>
-        </div>
-
-        <button
-          onClick={guardarDatosTabla}
-          className="w-1/2 mx-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+    <div className="p-4">
+      {error && (
+        <div className="my-4 text-3xl italic text-blue-500">{error}</div>
+      )}
+      <InputComponent onAñadirSabor={handleAñadirSabor} />
+  
+      <h2 className="text-center text-4xl mb-2 font-bold text-blue-500  tracking-tight">Tabla</h2>
+  
+      <h1 className="text-center text-4xl font-bold uppercase mb-2 text-white facon">
+        {nombreEsencia}
+      </h1>
+  
+      <table className="font-semibold border border-blue-500 w-full">
+        <thead>
+          <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border-b border-blue-500">
+            <th className="py-2 px-4 bg-blue-500 border border-white">
+              Ingredientes
+            </th>
+            <th className="py-2 px-4 bg-blue-500 border border-white">mL</th>
+            <th className="py-2 px-4 bg-blue-500 border border-white">Gramos</th>
+            <th className="py-2 px-4 bg-blue-500 border border-white">%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="text-center border-b border-blue-500">
+            <td className="py-2 px-4">Jugo de Nicotina</td>
+            <td className="py-2 px-4">{TotalNicotineJuice.toFixed(2)}</td>
+            <td className="py-2 px-4">{NicGrams.toFixed(2)}</td>
+            <td className="py-2 px-4">{PorcentajeNic.toFixed(1)}</td>
+          </tr>
+          <tr className="text-center border-b border-blue-500">
+            <td className="py-2 px-4">Diluyente PG</td>
+            <td className="py-2 px-4">{CantidadPg.toFixed(2)}</td>
+            <td className="py-2 px-4">{GramsPg.toFixed(2)}</td>
+            <td className="py-2 px-4">{PorcentajePg.toFixed(1)}</td>
+          </tr>
+          <tr className="text-center border-b border-blue-500">
+            <td className="py-2 px-4">Diluyente VG</td>
+            <td className="py-2 px-4">{CantidadVg.toFixed(2)}</td>
+            <td className="py-2 px-4">{GramsVg.toFixed(2)}</td>
+            <td className="py-2 px-4">{PorcentajeVg.toFixed(1)}</td>
+          </tr>
+          <tr className="text-center border-b border-blue-500">
+            <td className="py-2 px-4">Base Total</td>
+            <td className="py-2 px-4">
+              {(TotalNicotineJuice + CantidadVg + CantidadPg).toFixed(1)}
+            </td>
+            <td className="py-2 px-4">{SumatoriaGrams.toFixed(1)}</td>
+            <td className="py-2 px-4">
+              {(PorcentajeNic + PorcentajePg + PorcentajeVg).toFixed(1)}
+            </td>
+          </tr>
+  
+          {sabores.map((sabor, index) => {
+            let GramsVgSabores = (
+              (sabor.porcentaje * cantidad * 1.16) /
+              100
+            ).toFixed(2);
+            let GramsPgSabores = (
+              (sabor.porcentaje * cantidad) /
+              100
+            ).toFixed(2);
+  
+            return (
+              <tr
+                key={sabor.id || `sabor-${index}`}
+                className="text-center border-b border-blue-500"
+              >
+                <td className="py-2 px-4 font-semibold">
+                  {sabor.nombre}
+                  <button
+                    onClick={() => eliminarSabor(sabor.id)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300 ml-2"
+                  >
+                    X
+                  </button>
+                </td>
+                <td className="py-2 px-4">{GramsPgSabores}</td>
+                <td className="py-2 px-4">
+                  {sabor.Base === "PG" ? GramsPgSabores : GramsVgSabores}
+                </td>
+                <td className="py-2 px-4">{sabor.porcentaje}</td>
+              </tr>
+            );
+          })}
+  
+          <tr className="text-center border-b border-blue-500">
+            <td className="py-2 px-4">Total</td>
+            <td className="py-2 px-4">{cantidad}</td>
+            <td className="py-2 px-4">
+              {(
+                SumatoriaGrams +
+                (totalPG * cantidad) / 100 +
+                (totalVG * cantidad * 1.16) / 100
+              ).toFixed(1)}
+            </td>
+            <td className="py-2 px-4">100</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 ring-2 ring-slate-500">
+        <div
+          style={{
+            width: `${PorcentajePg}%`,
+          }}
+          className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
         >
-          Guardar
-        </button>
+          PG
+        </div>
+        <div
+          style={{
+            width: `${PorcentajeVg}%`,
+          }}
+          className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"
+        >
+          VG
+        </div>
+        <div
+          style={{
+            width: `${PorcentajeNic}%`,
+          }}
+          className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500"
+        >
+          Nicotina
+        </div>
+        <div
+          style={{
+            width: `${porcentajeRestante}%`,
+          }}
+          className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-500"
+        >
+          Aromas
+        </div>
       </div>
-    </>
+  
+      <button
+        onClick={guardarDatosTabla}
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring focus:ring-blue-300"
+      >
+        Guardar
+      </button>
+  
+      <ModalMensaje
+        mensaje={mensajeModal}
+        mostrar={mostrarModal}
+        onClose={() => setMostrarModal(false)}
+      />
+    </div>
   );
 }
 

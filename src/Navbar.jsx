@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import close from "./assets/close.svg"; // Ubicación específica de close.svg
-import logo from "./assets/logo3.jpg"; // Ubicación específica de logo.svg
-import menu from "./assets/menu.svg";
+import closeIcon from "./assets/close.svg";
+import logo from "./assets/logo5.png";
+import menuIcon from "./assets/menu.svg";
 
-export const navLinks = [
+const navLinks = [
   {
     id: "",
     title: "Calculadora",
@@ -15,7 +15,7 @@ export const navLinks = [
   },
   {
     id: "acerca-mi",
-    title: "Acerca de mí",
+    title: "Contáctame",
   },
 ];
 
@@ -23,75 +23,74 @@ const Navbar = () => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
 
+  const toggleMenu = () => {
+    setToggle(!toggle);
+  };
+
+  const closeMenu = () => {
+    setToggle(false);
+  };
+
   return (
-    <>
-      <nav className="w-full flex py-6 justify-between items-center navbar">
-        <img src={logo} alt="logo" style={{ width: "200px", height: "auto" }} />
+    <nav className="w-full flex py-6 justify-between items-center navbar">
+      <img src={logo} alt="logo" style={{ width: "200px", height: "auto" }} />
 
-        {/* Desktop Navigation */}
-        <ul className="list-none sm:flex hidden justify-end items-center flex-1">
-          {navLinks.map((nav, index) => (
-            <li
-              key={nav.id}
-              className={`font-poppins font-normal cursor-pointer text-[16px] ${
-                active === nav.id ? "text-white" : "text-dimWhite"
-              } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
-            >
-              <Link
-                to={`/${nav.id}`}
-                className={`${
-                  active === nav.id ? "text-white" : "text-dimWhite"
-                }`}
-                onClick={() => setActive(nav.id)}
-              >
-                {nav.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Mobile Navigation */}
-        <div className="sm:hidden flex flex-1 justify-end items-center">
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[28px] h-[28px] object-contain"
-            onClick={() => setToggle(!toggle)}
-          />
-
-          {/* Sidebar */}
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+      <ul className="list-none sm:flex hidden justify-end items-center flex-1">
+        {navLinks.map((nav) => (
+          <li
+            key={nav.id}
+            className={`font-poppins font-normal mx-2 cursor-pointer text-[16px] ${
+              active === nav.id ? "text-blue-300" : "text-blue-500"
+            }`}
           >
-            <ul className="list-none flex justify-end items-start flex-1 flex-col">
-              {navLinks.map((nav, index) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.id ? "text-white" : "text-dimWhite"
-                  } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                  onClick={() => {
-                    setActive(nav.id);
-                    setToggle(false); // Cierra el menú desplegable en dispositivos móviles
-                  }}
+            <Link
+              to={`/${nav.id}`}
+              className={active === nav.id ? "text-blue-300" : "text-blue-500"}
+              onClick={() => setActive(nav.id)}
+            >
+              {nav.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div className="sm:hidden flex flex-1 justify-end items-center">
+        <img
+          src={toggle ? closeIcon : menuIcon}
+          alt="menu"
+          className="w-8 h-8 object-contain cursor-pointer bg-blue-300"
+          onClick={toggleMenu}
+        />
+
+        <div
+          className={`${
+            toggle ? "flex" : "hidden"
+          } p-6 gradient-background absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
+        >
+          <ul className="list-none flex justify-end items-start flex-1 flex-col">
+            {navLinks.map((nav) => (
+              <li
+                key={nav.id}
+                className={`font-poppins font-medium cursor-pointer text-[16px] ${
+                  active === nav.id ? "text-blue-300" : "text-blue-500"
+                }`}
+                onClick={() => {
+                  setActive(nav.id);
+                  closeMenu();
+                }}
+              >
+                <Link
+                  to={`/${nav.id}`}
+                  className={active === nav.id ? "text-blue-300" : "text-blue-500"}
                 >
-                  <Link
-                    to={`/${nav.id}`}
-                    className={`${
-                      active === nav.id ? "text-white" : "text-dimWhite"
-                    }`}
-                  >
-                    {nav.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  {nav.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 

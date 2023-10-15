@@ -16,3 +16,8 @@ src: local("Facon"),
   src: local("GoGoPosterPunch"),
     url("./fonts/GoGoPosterPunch.otf") format("opentype");
   }
+
+  .gradient-background {
+    background: linear-gradient(90deg, #000000, #333333);
+    /* Puedes ajustar los colores y la dirección del gradiente según tus preferencias. */
+  }

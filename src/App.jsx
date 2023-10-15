@@ -16,7 +16,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+        <div className="bg-white dark:bg-gray-900 min-h-screen">
           <Routes>
             <Route exact path="/" element={<Form />} />
             <Route path="/recetasguardadas" element={<Recetas />} />

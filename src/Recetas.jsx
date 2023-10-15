@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import ModalEliminar from "./ModalEliminar";
 
 function Recetas() {
   const [datosGuardados, setDatosGuardados] = useState([]);
   const [esenciaSeleccionada, setEsenciaSeleccionada] = useState(null);
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   useEffect(() => {
     // Recupera los datos guardados del almacenamiento local al cargar la página
@@ -13,11 +15,21 @@ function Recetas() {
     }
   }, []);
 
-  const eliminarDato = (id) => {
-    const nuevosDatosGuardados = datosGuardados.filter(dato => dato.id !== id);
-    setDatosGuardados(nuevosDatosGuardados);
+  const abrirModal = () => {
+    setMostrarModal(true);
+  };
 
-    // Actualiza el almacenamiento local con los nuevos datos
+  const cerrarModal = () => {
+    setMostrarModal(false);
+  };
+
+  const eliminarDato = (id) => {
+    setMostrarModal(false);
+    const nuevosDatosGuardados = datosGuardados.filter(
+      (dato) => dato.id !== id
+    );
+    setDatosGuardados(nuevosDatosGuardados);
+    setEsenciaSeleccionada(null); // Establece la esencia seleccionada como null
     localStorage.setItem(
       "datosGuardados",
       JSON.stringify(nuevosDatosGuardados)
@@ -25,105 +37,170 @@ function Recetas() {
   };
 
   const toggleEsenciaSeleccionada = (dato) => {
-    if (esenciaSeleccionada && esenciaSeleccionada.nombreEsencia === dato.nombreEsencia) {
-      // Si ya está seleccionada, ocúltala
-      setEsenciaSeleccionada(null);
+    if (esenciaSeleccionada && esenciaSeleccionada.id === dato.id) {
+      setEsenciaSeleccionada(null); // Si la misma esencia se hace clic dos veces, ocúltala.
     } else {
-      // De lo contrario, muestra los datos de la esencia seleccionada
       setEsenciaSeleccionada(dato);
     }
   };
 
   return (
     <>
-      <h1 className="text-4xl font-bold p-4">
+      <h1 className="text-4xl font-bold p-4 text-blue-500">
         Tus recetas guardadas:
       </h1>
       <ul>
-        {datosGuardados.map(dato => (
-          <li key={dato.id} className="mb-4">
+        {datosGuardados.map((dato, index) => (
+          <li
+            key={dato.id || `dato-${index}`}
+            className="m-6 bg-black p-4 rounded-lg text-blue-500"
+          >
             <div className="flex items-center">
               <p
                 onClick={() => toggleEsenciaSeleccionada(dato)}
                 style={{ cursor: "pointer" }}
-                className="text-2xl text-black hover:text-blue-900 font-bold"
+                className="text-2xl hover:text-blue-900 font-bold cursor-pointer text-blue-500"
               >
                 {dato.nombreEsencia}
               </p>
               <button
-                onClick={() => {eliminarDato(dato.id); toggleEsenciaSeleccionada(dato)}}
+                onClick={() => {
+                  abrirModal();
+                }}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300 ml-2"
               >
                 Eliminar
               </button>
+              <ModalEliminar
+                isOpen={mostrarModal}
+                onClose={cerrarModal}
+                eliminarTarea={() => {
+                  eliminarDato(dato.id || `dato-${index}`);
+                  toggleEsenciaSeleccionada(dato);
+                }}
+              />
             </div>
+            <p className="text-xl italic text-slate-600">{dato.descripcion}</p>
+            <p className="text-xl italic text-slate-600">Tiempo sugerido de remojo: <span className="text-xl text-blue-500">{dato.tiempo}</span> días</p>
           </li>
         ))}
       </ul>
 
       {esenciaSeleccionada && (
-        <div>
-          <div className="flex flex-col justify-between mx-auto px-4">
-            <h3 className="text-center text-4xl font-bold text-outline uppercase mb-2 facon">
-              {esenciaSeleccionada.nombreEsencia}
-            </h3>
-            <table className="font-bold text-center">
-              <thead>
-                <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border border-gray-600">
-                  <th className="py-2 px-4 bg-gray-200">Ingredientes</th>
-                  <th className="py-2 px-4 bg-gray-200">mL</th>
-                  <th className="py-2 px-4 bg-gray-200">Gramos</th>
-                  <th className="py-2 px-4 bg-gray-200">%</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Jugo de Nicotina</td>
-                  <td>{esenciaSeleccionada.nicotineJuice.mL}</td>
-                  <td>{esenciaSeleccionada.nicotineJuice.Grams}</td>
-                  <td>{esenciaSeleccionada.nicotineJuice.Porcentaje}</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Diluyente PG</td>
-                  <td>{esenciaSeleccionada.pgDilutant.mL}</td>
-                  <td>{esenciaSeleccionada.pgDilutant.Grams}</td>
-                  <td>{esenciaSeleccionada.pgDilutant.Porcentaje}</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Diluyente VG</td>
-                  <td>{esenciaSeleccionada.vgDilutant.mL}</td>
-                  <td>{esenciaSeleccionada.vgDilutant.Grams}</td>
-                  <td>{esenciaSeleccionada.vgDilutant.Porcentaje}</td>
-                  <td></td>
-                </tr>
-                {esenciaSeleccionada.sabores.map(sabor => (
-                  <tr key={sabor.id}>
-                    <td className="text-slate-200">{sabor.nombre}</td>
-                    <td>{sabor.GramsPgSabores}</td>
-                    <td>
-                      {sabor.Base === "PG"
-                        ? sabor.GramsPgSabores
-                        : sabor.GramsVgSabores}
-                    </td>
-                    <td>{sabor.Porcentaje}</td>
-                    <td></td>
-                  </tr>
-                ))}
-                <tr>
-                  <td>Total</td>
-                  <td>{esenciaSeleccionada.total.mL}</td>
-                  <td>{esenciaSeleccionada.total.Grams}</td>
-                  <td>{esenciaSeleccionada.total.Porcentaje}</td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div className="bg-black p-4 rounded-lg m-6 mx-auto">
+          <h3 className="text-center text-4xl font-bold uppercase mb-2 facon text-white">
+            {esenciaSeleccionada.nombreEsencia}
+          </h3>
 
-          <div className="relative pt-1 mx-4">
-            <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 mx-4 ring-2 ring-slate-700">
+          <table className="font-semibold border border-blue-500 mx-auto">
+            <thead>
+              <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border-b border-blue-500">
+                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                  Ingredientes
+                </th>{" "}
+                {/* Establece el color del texto en blanco */}
+                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                  mL
+                </th>{" "}
+                {/* Establece el color del texto en blanco */}
+                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                  Gramos
+                </th>{" "}
+                {/* Establece el color del texto en blanco */}
+                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                  %
+                </th>{" "}
+                {/* Establece el color del texto en blanco */}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="text-center border-b border-blue-500">
+                <td className="py-2 px-4 text-white">Jugo de Nicotina</td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.nicotineJuice.mL}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.nicotineJuice.Grams}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.nicotineJuice.Porcentaje}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+              </tr>
+              <tr className="text-center border-b border-blue-500">
+                <td className="py-2 px-4 text-white">Diluyente PG</td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.pgDilutant.mL}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.pgDilutant.Grams}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.pgDilutant.Porcentaje}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+              </tr>
+              <tr className="text-center border-b border-blue-500">
+                <td className="py-2 px-4 text-white">Diluyente VG</td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.vgDilutant.mL}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.vgDilutant.Grams}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="py-2 px-4 text-white">
+                  {esenciaSeleccionada.vgDilutant.Porcentaje}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+              </tr>
+              {esenciaSeleccionada.sabores.map((sabor, index) => (
+                <tr
+                  key={sabor.id || `sabor-${index}`}
+                  className="text-center border-b border-blue-500"
+                >
+                  <td className="text-white">{sabor.nombre}</td>{" "}
+                  {/* Establece el color del texto en blanco */}
+                  <td className="text-white">{sabor.GramsPgSabores}</td>{" "}
+                  {/* Establece el color del texto en blanco */}
+                  <td className="text-white">
+                    {sabor.Base === "PG"
+                      ? sabor.GramsPgSabores
+                      : sabor.GramsVgSabores}
+                  </td>
+                  <td className="text-white">{sabor.Porcentaje}</td>{" "}
+                  {/* Establece el color del texto en blanco */}
+                </tr>
+              ))}
+              <tr className="text-center border-b border-blue-500">
+                <td className="text-white">Total</td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="text-white">
+                  {esenciaSeleccionada.total.mL}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="text-white">
+                  {esenciaSeleccionada.total.Grams}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+                <td className="text-white">
+                  {esenciaSeleccionada.total.Porcentaje}
+                </td>{" "}
+                {/* Establece el color del texto en blanco */}
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="relative pt-1 mx-auto">
+            <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 ring-2 ring-slate-700">
               <div
                 style={{
                   width: `${esenciaSeleccionada.pgDilutant.Porcentaje}%`,
@@ -163,4 +240,5 @@ function Recetas() {
     </>
   );
 }
+
 export default Recetas;
