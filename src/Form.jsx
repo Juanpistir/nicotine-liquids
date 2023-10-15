@@ -2,6 +2,7 @@ import { useState } from "react";
 import TableSabores from "./TableSabores";
 import "./styles.css";
 
+
 function Form() {
   // Estados
   const [nombreEsencia, setNombreEsencia] = useState("");

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ModalEliminar from "./ModalEliminar";
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
 function Recetas() {
   const [datosGuardados, setDatosGuardados] = useState([]);
@@ -81,7 +83,10 @@ function Recetas() {
               />
             </div>
             <p className="text-xl italic text-slate-600">{dato.descripcion}</p>
-            <p className="text-xl italic text-slate-600">Tiempo sugerido de remojo: <span className="text-xl text-blue-500">{dato.tiempo}</span> días</p>
+            <p className="text-xl italic text-slate-600">
+              Tiempo sugerido de remojo:{" "}
+              <span className="text-xl text-blue-500">{dato.tiempo}</span> días
+            </p>
           </li>
         ))}
       </ul>
@@ -92,112 +97,98 @@ function Recetas() {
             {esenciaSeleccionada.nombreEsencia}
           </h3>
 
-          <table className="font-semibold border border-blue-500 mx-auto">
-            <thead>
-              <tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border-b border-blue-500">
-                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+          <Table className="font-semibold border border-blue-500 mx-auto text-white">
+            <Thead>
+              <Tr className="text-md font-semibold text-gray-900 bg-gray-100 uppercase border-b border-blue-500">
+                <Th className="py-2 px-4 bg-blue-500 border border-white">
                   Ingredientes
-                </th>{" "}
-                {/* Establece el color del texto en blanco */}
-                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                </Th>
+
+                <Th className="py-2 px-4 bg-blue-500 border border-white">
                   mL
-                </th>{" "}
-                {/* Establece el color del texto en blanco */}
-                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
+                </Th>
+
+                <Th className="py-2 px-4 bg-blue-500 border border-white">
                   Gramos
-                </th>{" "}
-                {/* Establece el color del texto en blanco */}
-                <th className="py-2 px-4 bg-blue-500 border border-white text-white">
-                  %
-                </th>{" "}
-                {/* Establece el color del texto en blanco */}
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="text-center border-b border-blue-500">
-                <td className="py-2 px-4 text-white">Jugo de Nicotina</td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Th>
+
+                <Th className="py-2 px-4 bg-blue-500 border border-white">%</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              <Tr className="text-center border-b border-blue-500">
+                <Td className="py-2 px-4">Jugo de Nicotina</Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.nicotineJuice.mL}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.nicotineJuice.Grams}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.nicotineJuice.Porcentaje}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-              </tr>
-              <tr className="text-center border-b border-blue-500">
-                <td className="py-2 px-4 text-white">Diluyente PG</td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+              </Tr>
+              <Tr className="text-center border-b border-blue-500">
+                <Td className="py-2 px-4">Diluyente PG</Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.pgDilutant.mL}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.pgDilutant.Grams}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.pgDilutant.Porcentaje}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-              </tr>
-              <tr className="text-center border-b border-blue-500">
-                <td className="py-2 px-4 text-white">Diluyente VG</td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+              </Tr>
+              <Tr className="text-center border-b border-blue-500">
+                <Td className="py-2 px-4">Diluyente VG</Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.vgDilutant.mL}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.vgDilutant.Grams}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="py-2 px-4 text-white">
+                </Td>
+
+                <Td className="py-2 px-4">
                   {esenciaSeleccionada.vgDilutant.Porcentaje}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-              </tr>
+                </Td>
+              </Tr>
               {esenciaSeleccionada.sabores.map((sabor, index) => (
-                <tr
+                <Tr
                   key={sabor.id || `sabor-${index}`}
                   className="text-center border-b border-blue-500"
                 >
-                  <td className="text-white">{sabor.nombre}</td>{" "}
-                  {/* Establece el color del texto en blanco */}
-                  <td className="text-white">{sabor.GramsPgSabores}</td>{" "}
-                  {/* Establece el color del texto en blanco */}
-                  <td className="text-white">
+                  <Td>{sabor.nombre}</Td>
+
+                  <Td>{sabor.GramsPgSabores}</Td>
+
+                  <Td>
                     {sabor.Base === "PG"
                       ? sabor.GramsPgSabores
                       : sabor.GramsVgSabores}
-                  </td>
-                  <td className="text-white">{sabor.Porcentaje}</td>{" "}
-                  {/* Establece el color del texto en blanco */}
-                </tr>
+                  </Td>
+                  <Td>{sabor.Porcentaje}</Td>
+                </Tr>
               ))}
-              <tr className="text-center border-b border-blue-500">
-                <td className="text-white">Total</td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="text-white">
-                  {esenciaSeleccionada.total.mL}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="text-white">
-                  {esenciaSeleccionada.total.Grams}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-                <td className="text-white">
-                  {esenciaSeleccionada.total.Porcentaje}
-                </td>{" "}
-                {/* Establece el color del texto en blanco */}
-              </tr>
-            </tbody>
-          </table>
+              <Tr className="text-center border-b border-blue-500">
+                <Td>Total</Td>
+
+                <Td>{esenciaSeleccionada.total.mL}</Td>
+
+                <Td>{esenciaSeleccionada.total.Grams}</Td>
+
+                <Td>{esenciaSeleccionada.total.Porcentaje}</Td>
+              </Tr>
+            </Tbody>
+          </Table>
 
           <div className="relative pt-1 mx-auto">
             <div className="overflow-hidden h-4 mb-4 text-xs flex rounded bg-emerald-200 ring-2 ring-slate-700">
@@ -205,7 +196,7 @@ function Recetas() {
                 style={{
                   width: `${esenciaSeleccionada.pgDilutant.Porcentaje}%`,
                 }}
-                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
+                className="shadow-none flex flex-col text-center whitespace-nowrap justify-center bg-blue-500"
               >
                 PG
               </div>

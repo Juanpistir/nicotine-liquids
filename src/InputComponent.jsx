@@ -40,7 +40,7 @@ function InputComponent({ onAñadirSabor }) {
           <h2 className="text-center text-4xl mb-2 font-bold text-blue-500  tracking-tight">
             Aromas
           </h2>
-          <div className="flex flex-row">
+          <div className="flex justify-around flex-row">
             <input
               type="text"
               placeholder="Sabor"

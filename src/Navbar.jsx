@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import closeIcon from "./assets/close.svg";
 import logo from "./assets/logo5.png";
 import menuIcon from "./assets/menu.svg";
 
 const navLinks = [
   {
-    id: "/nicotine-liquids/",
+    id: "",
     title: "Calculadora",
   },
   {
-    id: "/nicotine-liquids/recetasguardadas",
+    id: "recetas",
     title: "Mis Recetas",
   },
   {
-    id: "/nicotine-liquids/acerca-mi",
+    id: "contacto",
     title: "Contáctame",
   },
 ];
@@ -39,18 +39,17 @@ const Navbar = () => {
         {navLinks.map((nav) => (
           <li
             key={nav.id}
-            className={`font-poppins font-normal mx-2 cursor-pointer text-[16px] ${
-              active === nav.id ? "text-blue-300" : "text-blue-500"
+            className={`font-poppins font-bold mx-2 cursor-pointer text-[16px] ${
+              active === nav.id ? "text-blue-500" : "text-blue-300"
             }`}
           >
-            <NavLink
+            <Link
               to={`/${nav.id}`}
-              activeClassName="text-blue-300"
-              className={active === nav.id ? "text-blue-300" : "text-blue-500"}
+              className={active === nav.id ? "text-blue-500" : "text-blue-300"}
               onClick={() => setActive(nav.id)}
             >
               {nav.title}
-            </NavLink>
+            </Link>
           </li>
         ))}
       </ul>
@@ -59,7 +58,7 @@ const Navbar = () => {
         <img
           src={toggle ? closeIcon : menuIcon}
           alt="menu"
-          className="w-8 h-8 object-contain cursor-pointer bg-blue-300"
+          className="w-8 h-8 object-contain cursor-pointer m-3 bg-blue-300"
           onClick={toggleMenu}
         />
 
@@ -72,23 +71,22 @@ const Navbar = () => {
             {navLinks.map((nav) => (
               <li
                 key={nav.id}
-                className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                  active === nav.id ? "text-blue-300" : "text-blue-500"
+                className={`font-poppins font-bold cursor-pointer text-[16px] ${
+                  active === nav.id ? "text-blue-500" : "text-blue-300"
                 }`}
                 onClick={() => {
                   setActive(nav.id);
                   closeMenu();
                 }}
               >
-                <NavLink
+                <Link
                   to={`/${nav.id}`}
-                  activeClassName="text-blue-300"
                   className={
                     active === nav.id ? "text-blue-300" : "text-blue-500"
                   }
                 >
                   {nav.title}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>
