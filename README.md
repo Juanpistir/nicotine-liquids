@@ -1,8 +1,20 @@
-# React + Vite
+# Nicotine Liquids
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Página:
 
-Currently, two official plugins are available:
+https://juanpistir.github.io/nicotine-liquids/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Esta es una calculadora de esencia de nicotina que te permite calcular con precisión la cantidad necesaria de ingredientes para crear tu propia esencia de vapeo. Puedes calcular mililitros, gramos y porcentajes de varios componentes, como jugo de nicotina, diluyente PG y VG, y aromas.
+
+## Características
+
+- Calcula la cantidad exacta de cada ingrediente según tus preferencias.
+- Añade sabores personalizados con porcentajes específicos.
+- Proporciona información detallada sobre la composición de tu esencia.
+
+## Uso
+
+1. Ingresa la cantidad total de esencia que deseas producir en mililitros.
+2. Añade los componentes necesarios, como jugo de nicotina, diluyente PG y VG.
+3. Agrega sabores y especifica los porcentajes deseados.
+4. La calculadora te mostrará automáticamente la cantidad en gramos y porcentaje de cada ingrediente.
