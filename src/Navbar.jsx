@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import closeIcon from "./assets/close.svg";
 import logo from "./assets/logo5.png";
 import menuIcon from "./assets/menu.svg";
@@ -43,13 +43,14 @@ const Navbar = () => {
               active === nav.id ? "text-blue-300" : "text-blue-500"
             }`}
           >
-            <Link
+            <NavLink
               to={`/${nav.id}`}
+              activeClassName="text-blue-300"
               className={active === nav.id ? "text-blue-300" : "text-blue-500"}
               onClick={() => setActive(nav.id)}
             >
               {nav.title}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>
@@ -79,12 +80,15 @@ const Navbar = () => {
                   closeMenu();
                 }}
               >
-                <Link
+                <NavLink
                   to={`/${nav.id}`}
-                  className={active === nav.id ? "text-blue-300" : "text-blue-500"}
+                  activeClassName="text-blue-300"
+                  className={
+                    active === nav.id ? "text-blue-300" : "text-blue-500"
+                  }
                 >
                   {nav.title}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
