@@ -18,9 +18,9 @@ function App() {
         </div>
         <div className="bg-white dark:bg-gray-900 min-h-screen">
           <Routes>
-            <Route exact path="/" element={<Form />} />
-            <Route path="/recetasguardadas" element={<Recetas />} />
-            <Route path="/acerca-mi" element={<Acerca />} />
+            <Route exact path="/nicotine-liquids/" element={<Form />} />
+            <Route path="/nicotine-liquids/recetasguardadas" element={<Recetas />} />
+            <Route path="/nicotine-liquids/acerca-mi" element={<Acerca />} />
           </Routes>
         </div>
       </HashRouter>

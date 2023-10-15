@@ -6,15 +6,15 @@ import menuIcon from "./assets/menu.svg";
 
 const navLinks = [
   {
-    id: "",
+    id: "/nicotine-liquids/",
     title: "Calculadora",
   },
   {
-    id: "recetasguardadas",
+    id: "/nicotine-liquids/recetasguardadas",
     title: "Mis Recetas",
   },
   {
-    id: "acerca-mi",
+    id: "/nicotine-liquids/acerca-mi",
     title: "Contáctame",
   },
 ];
