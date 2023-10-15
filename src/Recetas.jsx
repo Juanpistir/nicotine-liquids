@@ -7,6 +7,8 @@ function Recetas() {
   const [datosGuardados, setDatosGuardados] = useState([]);
   const [esenciaSeleccionada, setEsenciaSeleccionada] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
+  
+  const [idEliminar, setIdEliminar] = useState(null);
 
   useEffect(() => {
     // Recupera los datos guardados del almacenamiento local al cargar la página
@@ -17,18 +19,19 @@ function Recetas() {
     }
   }, []);
 
-  const abrirModal = () => {
+  const abrirModal = (id) => {
     setMostrarModal(true);
+    setIdEliminar(id)
   };
 
   const cerrarModal = () => {
     setMostrarModal(false);
   };
 
-  const eliminarDato = (id) => {
+  const eliminarDato = () => {
     setMostrarModal(false);
     const nuevosDatosGuardados = datosGuardados.filter(
-      (dato) => dato.id !== id
+      (dato) => dato.id !== idEliminar
     );
     setDatosGuardados(nuevosDatosGuardados);
     setEsenciaSeleccionada(null); // Establece la esencia seleccionada como null
@@ -67,7 +70,7 @@ function Recetas() {
               </p>
               <button
                 onClick={() => {
-                  abrirModal();
+                  abrirModal(dato.id || `dato-${index}`);
                 }}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-full focus:outline-none focus:ring focus:ring-red-300 ml-2"
               >
@@ -76,10 +79,7 @@ function Recetas() {
               <ModalEliminar
                 isOpen={mostrarModal}
                 onClose={cerrarModal}
-                eliminarTarea={() => {
-                  eliminarDato(dato.id || `dato-${index}`);
-                  toggleEsenciaSeleccionada(dato);
-                }}
+                eliminarTarea={eliminarDato}
               />
             </div>
             <p className="text-xl italic text-slate-600">{dato.descripcion}</p>
