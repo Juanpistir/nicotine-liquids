@@ -1,47 +1,10 @@
-window.global ||= window;
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import Form from "./Form";
-import Recetas from "./Recetas";
-import Acerca from "./Acerca";
-import { createHashRouter, RouterProvider } from "react-router-dom";
-import Navbar from "./Navbar";
-import "./App.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './styles/globals.css';
 
-const router = createHashRouter([
-  {
-    path: "/",
-    element: (
-      <>
-        <Navbar />
-        <Form />
-      </>
-    ),
-  },
-  {
-    path: "/recetas",
-    element: (
-      <>
-        <Navbar />
-        <Recetas />
-      </>
-    ),
-  },
-  {
-    path: "/contacto",
-    element: (
-      <>
-        <Navbar />
-        <Acerca />
-      </>
-    ),
-  },
-]);
-
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-    </RouterProvider>
+    <App />
   </React.StrictMode>
 );
