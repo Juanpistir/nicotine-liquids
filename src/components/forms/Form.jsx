@@ -246,178 +246,182 @@ const Form = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Calculadora de Líquidos</h2>
-          
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Nombre de la Receta
-              </label>
-              <input
-                type="text"
-                name="nombreEsencia"
-                value={formData.nombreEsencia}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 pt-24"> {/* Añadido pt-24 */}
+      <div className="max-w-[1920px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Formulario */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Calculadora de Líquidos</h2>
+            
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Nombre de la Receta
+                </label>
+                <input
+                  type="text"
+                  name="nombreEsencia"
+                  value={formData.nombreEsencia}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Descripción (opcional)
-              </label>
-              <input
-                type="text"
-                name="descripcion"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Descripción (opcional)
+                </label>
+                <input
+                  type="text"
+                  name="descripcion"
+                  value={formData.descripcion}
+                  onChange={handleInputChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Cantidad (ml)
-              </label>
-              <input
-                type="number"
-                name="cantidad"
-                value={formData.cantidad}
-                onChange={handleInputChange}
-                min="1"
-                max="1000"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Cantidad (ml)
+                </label>
+                <input
+                  type="number"
+                  name="cantidad"
+                  value={formData.cantidad}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="1000"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Fuerza deseada (mg)
-              </label>
-              <input
-                type="number"
-                name="fuerza"
-                value={formData.fuerza}
-                onChange={handleInputChange}
-                min="0"
-                max="50"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Fuerza deseada (mg)
+                </label>
+                <input
+                  type="number"
+                  name="fuerza"
+                  value={formData.fuerza}
+                  onChange={handleInputChange}
+                  min="0"
+                  max="50"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Fuerza de nicotina (mg)
-              </label>
-              <input
-                type="number"
-                name="fuerzaNicotina"
-                value={formData.fuerzaNicotina}
-                onChange={handleInputChange}
-                min="1"
-                max="250"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Fuerza de nicotina (mg)
+                </label>
+                <input
+                  type="number"
+                  name="fuerzaNicotina"
+                  value={formData.fuerzaNicotina}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="250"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Ratio PG/VG Base
-              </label>
-              <div className="grid grid-cols-2 gap-4 mt-1">
-                <div>
-                  <input
-                    type="number"
-                    name="pgValue"
-                    value={formData.pgValue}
-                    onChange={handleInputChange}
-                    min="0"
-                    max="100"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-500">PG%</span>
-                </div>
-                <div>
-                  <input
-                    type="number"
-                    name="vgValue"
-                    value={formData.vgValue}
-                    onChange={handleInputChange}
-                    min="0"
-                    max="100"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-500">VG%</span>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Ratio PG/VG Base
+                </label>
+                <div className="grid grid-cols-2 gap-4 mt-1">
+                  <div>
+                    <input
+                      type="number"
+                      name="pgValue"
+                      value={formData.pgValue}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-500">PG%</span>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      name="vgValue"
+                      value={formData.vgValue}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-500">VG%</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Ratio PG/VG Nicotina
-              </label>
-              <div className="grid grid-cols-2 gap-4 mt-1">
-                <div>
-                  <input
-                    type="number"
-                    name="pgNValue"
-                    value={formData.pgNValue}
-                    onChange={handleInputChange}
-                    min="0"
-                    max="100"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-500">PG%</span>
-                </div>
-                <div>
-                  <input
-                    type="number"
-                    name="vgNValue"
-                    value={formData.vgNValue}
-                    onChange={handleInputChange}
-                    min="0"
-                    max="100"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  />
-                  <span className="text-sm text-gray-500">VG%</span>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Ratio PG/VG Nicotina
+                </label>
+                <div className="grid grid-cols-2 gap-4 mt-1">
+                  <div>
+                    <input
+                      type="number"
+                      name="pgNValue"
+                      value={formData.pgNValue}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-500">PG%</span>
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      name="vgNValue"
+                      value={formData.vgNValue}
+                      onChange={handleInputChange}
+                      min="0"
+                      max="100"
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-500">VG%</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Tiempo de reposo (días)
-              </label>
-              <input
-                type="number"
-                name="tiempo"
-                value={formData.tiempo}
-                onChange={handleInputChange}
-                min="1"
-                max="90"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Tiempo de reposo (días)
+                </label>
+                <input
+                  type="number"
+                  name="tiempo"
+                  value={formData.tiempo}
+                  onChange={handleInputChange}
+                  min="1"
+                  max="90"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <TableSabores
-          aromas={aromas}
-          setAromas={setAromas}
-          error={error}
-          setError={setError}
-          calculatedData={calculatedData}
-          onSave={handleGuardarReceta}
-          cantidad={formData.cantidad}
-          nombreEsencia={formData.nombreEsencia}
-          fuerza={formData.fuerza}
-          pgValue={formData.pgValue}
-          vgValue={formData.vgValue}
-          tiempo={formData.tiempo}
-        />
+          {/* TableSabores */}
+          <TableSabores
+            aromas={aromas}
+            setAromas={setAromas}
+            error={error}
+            setError={setError}
+            calculatedData={calculatedData}
+            onSave={handleGuardarReceta}
+            cantidad={formData.cantidad}
+            nombreEsencia={formData.nombreEsencia}
+            fuerza={formData.fuerza}
+            pgValue={formData.pgValue}
+            vgValue={formData.vgValue}
+            tiempo={formData.tiempo}
+          />
+        </div>
 
         <ModalMensaje
           mostrar={showModal}
