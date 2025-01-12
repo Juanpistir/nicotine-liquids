@@ -81,7 +81,7 @@ const Navbar = () => {
                   ${active === nav.title ? "text-blue-600" : "text-gray-700"}`}
                 onClick={() => setActive(nav.title)}
               >
-                <Link to={`/${nav.id}`}>{nav.title}</Link>
+                <Link to={nav.id ? `/${nav.id}` : ""}>{nav.title}</Link>
               </li>
             ))}
           </ul>
@@ -114,7 +114,7 @@ const Navbar = () => {
                       closeMenu();
                     }}
                   >
-                    <Link to={`/${nav.id}`}>{nav.title}</Link>
+                    <Link to={nav.id ? `/${nav.id}` : ""}>{nav.title}</Link>
                   </li>
                 ))}
               </ul>

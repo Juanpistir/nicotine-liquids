@@ -14,7 +14,7 @@ import RegisterForm from "@/components/auth/RegisterForm";
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/nicotine-liquids">
         <Navbar />
         <Layout>
           <Routes>
