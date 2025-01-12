@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Slider } from "../ui/slider"; // Actualiza la ruta de importación
 import TableSabores from '../recipes/TableSabores';
 import ModalMensaje from '../modals/ModalMensaje';
 
@@ -76,6 +77,25 @@ const Form = () => {
       ...prev,
       [name]: newValue
     }));
+  };
+
+  const handleSliderChange = (name, value) => {
+    const pgValue = value[0];
+    const vgValue = 100 - pgValue;
+    
+    if (name === 'pgvg') {
+      setFormData(prev => ({
+        ...prev,
+        pgValue: pgValue,
+        vgValue: vgValue
+      }));
+    } else if (name === 'nicotina') {
+      setFormData(prev => ({
+        ...prev,
+        pgNValue: pgValue,
+        vgNValue: vgValue
+      }));
+    }
   };
 
   const calcularComponentes = () => {
@@ -327,70 +347,6 @@ const Form = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Ratio PG/VG Base
-                </label>
-                <div className="grid grid-cols-2 gap-4 mt-1">
-                  <div>
-                    <input
-                      type="number"
-                      name="pgValue"
-                      value={formData.pgValue}
-                      onChange={handleInputChange}
-                      min="0"
-                      max="100"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-500">PG%</span>
-                  </div>
-                  <div>
-                    <input
-                      type="number"
-                      name="vgValue"
-                      value={formData.vgValue}
-                      onChange={handleInputChange}
-                      min="0"
-                      max="100"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-500">VG%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Ratio PG/VG Nicotina
-                </label>
-                <div className="grid grid-cols-2 gap-4 mt-1">
-                  <div>
-                    <input
-                      type="number"
-                      name="pgNValue"
-                      value={formData.pgNValue}
-                      onChange={handleInputChange}
-                      min="0"
-                      max="100"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-500">PG%</span>
-                  </div>
-                  <div>
-                    <input
-                      type="number"
-                      name="vgNValue"
-                      value={formData.vgNValue}
-                      onChange={handleInputChange}
-                      min="0"
-                      max="100"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    />
-                    <span className="text-sm text-gray-500">VG%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
                   Tiempo de reposo (días)
                 </label>
                 <input
@@ -402,6 +358,46 @@ const Form = () => {
                   max="90"
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 />
+              </div>
+
+              <div className="col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Ratio PG/VG Base
+                </label>
+                <div className="space-y-4">
+                  <Slider
+                    defaultValue={[formData.pgValue]}
+                    max={100}
+                    step={1}
+                    value={[formData.pgValue]}
+                    onValueChange={(value) => handleSliderChange('pgvg', value)}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <span>PG: {formData.pgValue}%</span>
+                    <span>VG: {formData.vgValue}%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Ratio PG/VG Nicotina
+                </label>
+                <div className="space-y-4">
+                  <Slider
+                    defaultValue={[formData.pgNValue]}
+                    max={100}
+                    step={1}
+                    value={[formData.pgNValue]}
+                    onValueChange={(value) => handleSliderChange('nicotina', value)}
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <span>PG: {formData.pgNValue}%</span>
+                    <span>VG: {formData.vgNValue}%</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
