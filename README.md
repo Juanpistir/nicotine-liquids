@@ -1,16 +1,16 @@
 # 🧪 Nicotine Liquids - Calculadora de E-líquidos
 
-![Banner](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/public/Banner.png)
+![Banner](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/main/public/Banner.png)
 
 ## 🌐 Demo
 [Visitar Aplicación](https://juanpistir.github.io/nicotine-liquids/)
 
 ## 📱 Capturas de Pantalla
-![Calculadora](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/public/captura.png)
+![Calculadora](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/main/public/captura.png)
 
-![Inicio Sesión](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/public/captura2.png)
+![Inicio Sesión](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/main/public/captura2.png)
 
-![Mis Recetas](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/public/captura3.png)
+![Mis Recetas](https://raw.githubusercontent.com/juanpistir/nicotine-liquids/main/public/captura3.png)
 
 ## 📝 Descripción
 Aplicación web para calcular mezclas de e-líquidos de vapeo. Permite a los usuarios crear, guardar y gestionar sus recetas personalizadas de forma segura.
