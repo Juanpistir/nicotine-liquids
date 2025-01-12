@@ -14,7 +14,9 @@ const Acerca: React.FC = () => {
     return (
       <div className="bg-gray-900 min-h-screen flex items-center justify-center">
         <div className="text-center p-8 bg-gray-800 rounded-lg shadow-xl">
-          <h2 className="text-4xl font-extrabold text-blue-500 mb-4">¡Gracias!</h2>
+          <h2 className="text-4xl font-extrabold text-blue-500 mb-4">
+            ¡Gracias!
+          </h2>
           <p className="text-xl text-gray-300">
             Tu mensaje ha sido enviado correctamente.
             <br />
@@ -26,7 +28,7 @@ const Acerca: React.FC = () => {
   }
 
   return (
-    <section className="bg-gray-900 min-h-screen rounded-lg p-4 mx-2">
+    <section className="bg-gray-900 min-h-screen rounded-lg p-4 mx-2 pt-24">
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-blue-500">
           Contáctame
@@ -36,7 +38,7 @@ const Acerca: React.FC = () => {
           sugerencias para colaborar en futuros proyectos o cualquier
           recomendación que puedas ofrecer para mejorarlo.
         </p>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label

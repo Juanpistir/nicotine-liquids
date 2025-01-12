@@ -266,16 +266,18 @@ const Form = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 pt-24"> {/* Añadido pt-24 */}
+    <div className="min-h-screen bg-slate-100 py-12 px-4 sm:px-6 lg:px-8 pt-24"> {/* Cambiado de bg-gray-50 a bg-slate-100 */}
       <div className="max-w-[1920px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Formulario */}
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Calculadora de Líquidos</h2>
+            <h2 className="font-heading text-2xl font-semibold text-gray-900 mb-6 tracking-tight">
+              Calculadora de Líquidos
+            </h2>
             
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="font-heading text-sm font-medium text-gray-700">
                   Nombre de la Receta
                 </label>
                 <input
@@ -283,10 +285,9 @@ const Form = () => {
                   name="nombreEsencia"
                   value={formData.nombreEsencia}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="font-sans mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Descripción (opcional)
@@ -402,21 +403,24 @@ const Form = () => {
             </div>
           </div>
 
-          {/* TableSabores */}
-          <TableSabores
-            aromas={aromas}
-            setAromas={setAromas}
-            error={error}
-            setError={setError}
-            calculatedData={calculatedData}
-            onSave={handleGuardarReceta}
-            cantidad={formData.cantidad}
-            nombreEsencia={formData.nombreEsencia}
-            fuerza={formData.fuerza}
-            pgValue={formData.pgValue}
-            vgValue={formData.vgValue}
-            tiempo={formData.tiempo}
-          />
+          {/* Números y datos técnicos con fuente mono */}
+          <div className="font-mono">
+            {/* TableSabores */}
+            <TableSabores
+              aromas={aromas}
+              setAromas={setAromas}
+              error={error}
+              setError={setError}
+              calculatedData={calculatedData}
+              onSave={handleGuardarReceta}
+              cantidad={formData.cantidad}
+              nombreEsencia={formData.nombreEsencia}
+              fuerza={formData.fuerza}
+              pgValue={formData.pgValue}
+              vgValue={formData.vgValue}
+              tiempo={formData.tiempo}
+            />
+          </div>
         </div>
 
         <ModalMensaje

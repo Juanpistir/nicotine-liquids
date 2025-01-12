@@ -184,15 +184,15 @@ const TableSabores = ({
     <div className="bg-white rounded-lg shadow-lg p-6">
       {nombreEsencia && (
         <div className="mb-6 bg-gray-50 rounded-lg p-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">{nombreEsencia}</h2>
-          <p className="text-gray-600">
+          <h2 className="font-heading text-2xl font-bold text-gray-900 mb-2">{nombreEsencia}</h2>
+          <p className="font-mono text-gray-600">
             {cantidad}ml • {fuerza}mg • {pgValue}/{vgValue} • {tiempo} días de reposo
           </p>
         </div>
       )}
 
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Agregar Aroma</h2>
+        <h2 className="font-heading text-2xl font-bold text-gray-900 mb-4">Agregar Aroma</h2>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -265,7 +265,7 @@ const TableSabores = ({
       </div>
 
       <div className="mt-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Composición de la Receta</h2>
+        <h2 className="font-heading text-2xl font-bold text-gray-900 mb-4">Composición de la Receta</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -274,7 +274,7 @@ const TableSabores = ({
                   {headerGroup.headers.map(header => (
                     <th
                       key={header.id}
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left font-heading text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       {flexRender(
                         header.column.columnDef.header,
@@ -289,7 +289,7 @@ const TableSabores = ({
               {table.getRowModel().rows.map(row => (
                 <tr
                   key={row.id}
-                  className={row.original.id === 'total' ? 'bg-gray-50 font-bold' : ''}
+                  className={`font-mono ${row.original.id === 'total' ? 'bg-gray-50 font-bold' : ''}`}
                 >
                   {row.getVisibleCells().map(cell => (
                     <td

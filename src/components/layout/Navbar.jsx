@@ -40,7 +40,7 @@ const Navbar = () => {
           {navLinks.map((nav) => (
             <li
               key={nav.id}
-              className={`font-medium cursor-pointer text-[16px] hover:text-blue-600 transition-colors duration-200
+              className={`font-heading font-medium cursor-pointer text-[16px] hover:text-blue-600 transition-colors duration-200
                 ${active === nav.title ? "text-blue-600" : "text-gray-700"}`}
               onClick={() => setActive(nav.title)}
             >
@@ -66,7 +66,7 @@ const Navbar = () => {
               {navLinks.map((nav) => (
                 <li
                   key={nav.id}
-                  className={`font-medium cursor-pointer text-[16px] mb-4 hover:text-blue-600 transition-colors duration-200
+                  className={`font-heading font-medium cursor-pointer text-[16px] mb-4 hover:text-blue-600 transition-colors duration-200
                     ${active === nav.title ? "text-blue-600" : "text-gray-700"}`}
                   onClick={() => {
                     setActive(nav.title);
