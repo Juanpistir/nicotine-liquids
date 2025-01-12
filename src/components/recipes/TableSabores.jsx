@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   flexRender
 } from '@tanstack/react-table';
+import { useAuth } from "@/contexts/AuthContext";
+import { v4 as uuidv4 } from 'uuid';
 
 const TableSabores = ({
   aromas,
@@ -11,14 +13,16 @@ const TableSabores = ({
   error,
   setError,
   calculatedData,
-  onSave,
   cantidad,
   nombreEsencia,
   fuerza,
   pgValue,
   vgValue,
-  tiempo
+  tiempo,
+  descripcion, // Añadir descripción como prop
+  onSave
 }) => {
+  const { user, saveUserRecipe } = useAuth();
   const [nuevoAroma, setNuevoAroma] = useState({
     nombre: '',
     porcentaje: '',
@@ -343,7 +347,7 @@ const TableSabores = ({
 
         <div className="mt-6">
           <button
-            onClick={onSave}
+            onClick={onSave} // Llamar directamente onSave del padre
             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Guardar Receta

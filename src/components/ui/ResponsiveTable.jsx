@@ -34,9 +34,9 @@ const ResponsiveTable = ({ data, onDelete }) => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {data.map((item) => (
+          {data.map((item, index) => (
             <tr 
-              key={item.id} 
+              key={item.id || index} 
               className={`
                 ${item.id === 'total' ? 'bg-gray-50 font-semibold' : 'hover:bg-gray-50'} 
                 transition-colors duration-150

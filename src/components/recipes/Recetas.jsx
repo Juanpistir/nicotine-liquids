@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import ModalEliminar from "../modals/ModalEliminar";
 import ResponsiveTable from '../ui/ResponsiveTable';
+import { Link } from 'react-router-dom';
 
 function Recetas() {
+  const { user, getUserRecipes, deleteUserRecipe } = useAuth();
   const [datosGuardados, setDatosGuardados] = useState([]);
   const [recetaSeleccionada, setRecetaSeleccionada] = useState(null);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [idEliminar, setIdEliminar] = useState(null);
 
   useEffect(() => {
-    cargarRecetas();
-  }, []);
+    if (user) {
+      cargarRecetas();
+    }
+  }, [user]);
 
-  const cargarRecetas = () => {
-    const datosGuardadosLocalStorage = JSON.parse(localStorage.getItem("datosGuardados")) || [];
-    setDatosGuardados(datosGuardadosLocalStorage);
+  const cargarRecetas = async () => {
+    const recetas = await getUserRecipes();
+    setDatosGuardados(recetas);
   };
 
   const abrirModal = (id) => {
@@ -27,12 +32,16 @@ function Recetas() {
     setIdEliminar(null);
   };
 
-  const eliminarReceta = () => {
-    const nuevosDatosGuardados = datosGuardados.filter((dato) => dato.id !== idEliminar);
-    localStorage.setItem("datosGuardados", JSON.stringify(nuevosDatosGuardados));
-    setDatosGuardados(nuevosDatosGuardados);
-    setRecetaSeleccionada(null);
-    cerrarModal();
+  const eliminarReceta = async () => {
+    try {
+      await deleteUserRecipe(idEliminar);
+      const nuevosDatosGuardados = datosGuardados.filter((dato) => dato.id !== idEliminar);
+      setDatosGuardados(nuevosDatosGuardados);
+      setRecetaSeleccionada(null);
+      cerrarModal();
+    } catch (error) {
+      console.error("Error al eliminar la receta:", error);
+    }
   };
 
   const toggleRecetaSeleccionada = (receta) => {
@@ -44,14 +53,61 @@ function Recetas() {
   };
 
   const getTableData = (receta) => {
-    // Si tenemos los datos de la tabla guardados, usarlos directamente
-    if (receta.datosTabla && Array.isArray(receta.datosTabla)) {
-      return receta.datosTabla;
-    }
+    if (!receta.datosTabla) return [];
 
-    // Si no hay datos de tabla, retornar array vacío
-    return [];
+    const { nicotina, pg, vg, total } = receta.datosTabla;
+    const tableData = [
+      nicotina,
+      pg,
+      vg,
+      ...receta.aromas.map(aroma => ({
+        id: `aroma-${aroma.id}`,
+        nombre: `${aroma.nombre} (${aroma.Base})`,
+        mL: (receta.cantidad * aroma.porcentaje) / 100,
+        gramos: aroma.Base === 'PG' 
+          ? ((receta.cantidad * aroma.porcentaje) / 100)
+          : ((receta.cantidad * aroma.porcentaje * 1.16) / 100),
+        porcentaje: aroma.porcentaje
+      })),
+      total
+    ];
+
+    return tableData;
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8 pt-24">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+            <div className="text-6xl mb-6">😊</div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              ¡Bienvenido a Mis Recetas!
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Para guardar y administrar tus recetas personalizadas,
+              <br />
+              necesitas iniciar sesión o registrarte.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200"
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                to="/register"
+                className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 bg-transparent hover:bg-blue-50 transition-colors duration-200"
+              >
+                Registrarse
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 pt-24">
@@ -85,11 +141,15 @@ function Recetas() {
                       <div className="mt-2">
                         <h4 className="text-sm font-medium text-gray-700">Aromas:</h4>
                         <ul className="mt-1 space-y-1">
-                          {receta.aromas && receta.aromas.map((aroma, index) => (
-                            <li key={index} className="text-sm text-gray-600">
-                              {aroma.nombre} ({aroma.porcentaje}%)
-                            </li>
-                          ))}
+                          {receta.aromas && receta.aromas.length > 0 ? (
+                            receta.aromas.map((aroma, index) => (
+                              <li key={index} className="text-sm text-gray-600">
+                                {aroma.nombre} ({aroma.porcentaje}%)
+                              </li>
+                            ))
+                          ) : (
+                            <li className="text-sm text-gray-600">No hay aromas</li>
+                          )}
                         </ul>
                       </div>
                     </div>

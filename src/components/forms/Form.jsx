@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Slider } from "../ui/slider"; // Actualiza la ruta de importación
 import TableSabores from '../recipes/TableSabores';
 import ModalMensaje from '../modals/ModalMensaje';
+import { useAuth } from "@/contexts/AuthContext"; // Importar el contexto de autenticación
 
 const Form = () => {
+  const { user, saveUserRecipe } = useAuth(); // Obtener el usuario y la función para guardar recetas
   const [formData, setFormData] = useState({
     nombreEsencia: '',
     descripcion: '',
@@ -178,61 +180,48 @@ const Form = () => {
     });
   };
 
-  const handleGuardarReceta = () => {
+  const handleGuardarReceta = async () => {
     if (!formData.nombreEsencia.trim()) {
       setModalMessage('Por favor, ingresa un nombre para la receta');
       setShowModal(true);
       return;
     }
 
-    // Crear el array completo de datos de la tabla
-    const datosTabla = [
-      // Nicotina
-      {
+    // Crear el objeto de datos de la tabla en el formato correcto
+    const datosTabla = {
+      nicotina: {
         id: 'nicotine',
         nombre: 'Nicotina',
         mL: calculatedData.nicotina.mL,
         gramos: calculatedData.nicotina.gramos,
         porcentaje: calculatedData.nicotina.porcentaje
       },
-      // PG
-      {
+      pg: {
         id: 'pg',
         nombre: 'PG',
         mL: calculatedData.pg.mL,
         gramos: calculatedData.pg.gramos,
         porcentaje: calculatedData.pg.porcentaje
       },
-      // VG
-      {
+      vg: {
         id: 'vg',
         nombre: 'VG',
         mL: calculatedData.vg.mL,
         gramos: calculatedData.vg.gramos,
         porcentaje: calculatedData.vg.porcentaje
       },
-      // Aromas
-      ...aromas.map(aroma => ({
-        id: `aroma-${aroma.id}`,
-        nombre: `${aroma.nombre} (${aroma.Base})`,
-        mL: (formData.cantidad * aroma.porcentaje) / 100,
-        gramos: aroma.Base === 'PG' 
-          ? ((formData.cantidad * aroma.porcentaje) / 100)
-          : ((formData.cantidad * aroma.porcentaje * 1.16) / 100),
-        porcentaje: aroma.porcentaje
-      })),
-      // Total
-      {
+      total: {
         id: 'total',
         nombre: 'Total',
         mL: calculatedData.total.mL,
         gramos: calculatedData.total.gramos,
         porcentaje: calculatedData.total.porcentaje
-      }
-    ];
+      },
+      porcentajeRestante: calculatedData.porcentajeRestante
+    };
 
     const receta = {
-      id: Date.now(),
+      id: Date.now().toString(),
       ...formData,
       aromas: aromas.map(aroma => ({
         id: aroma.id,
@@ -243,26 +232,30 @@ const Form = () => {
       datosTabla
     };
 
-    const datosGuardados = JSON.parse(localStorage.getItem('datosGuardados')) || [];
-    localStorage.setItem('datosGuardados', JSON.stringify([...datosGuardados, receta]));
+    try {
+      await saveUserRecipe(receta); // Guardar la receta en Firestore
+      setModalMessage('¡Receta guardada correctamente!');
+      setShowModal(true);
 
-    setModalMessage('¡Receta guardada correctamente!');
-    setShowModal(true);
-
-    // Resetear el formulario
-    setFormData({
-      nombreEsencia: '',
-      descripcion: '',
-      cantidad: 30,
-      fuerza: 3,
-      fuerzaNicotina: 100,
-      pgValue: 50,
-      vgValue: 50,
-      pgNValue: 0,
-      vgNValue: 100,
-      tiempo: 14
-    });
-    setAromas([]);
+      // Resetear el formulario
+      setFormData({
+        nombreEsencia: '',
+        descripcion: '',
+        cantidad: 30,
+        fuerza: 3,
+        fuerzaNicotina: 100,
+        pgValue: 50,
+        vgValue: 50,
+        pgNValue: 0,
+        vgNValue: 100,
+        tiempo: 14
+      });
+      setAromas([]);
+    } catch (error) {
+      console.error("Error al guardar la receta:", error);
+      setModalMessage('Hubo un error al guardar la receta');
+      setShowModal(true);
+    }
   };
 
   return (
@@ -419,6 +412,7 @@ const Form = () => {
               pgValue={formData.pgValue}
               vgValue={formData.vgValue}
               tiempo={formData.tiempo}
+              descripcion={formData.descripcion} // Pasar la descripción al componente TableSabores
             />
           </div>
         </div>
